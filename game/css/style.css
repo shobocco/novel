@@ -5,6 +5,7 @@
 .chapter-active #characters,.chapter-active #enemy-layer,.chapter-active #text-window,.chapter-active #status,.chapter-active #save-btn,.chapter-active #choices,.chapter-active #toast,.chapter-active #debug-panel{visibility:hidden;opacity:0}
 #game,#game *{-webkit-user-select:none;user-select:none}#game img{-webkit-user-drag:none}
 #status.contract-locked{display:none!important}
+#chapter-card.show{display:grid;background:#050912dd;animation:none}
 #enemy-layer{position:absolute;z-index:3;left:34%;right:34%;top:25%;bottom:24%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}#enemy-layer img{display:block;max-height:65%;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 14px #000);animation:appear .25s}
 .enemy-active #characters{visibility:hidden;opacity:0}
 @media(min-width:701px){.character-slot.left,.character-slot.center,.character-slot.right{transform:translateY(30%)}}
