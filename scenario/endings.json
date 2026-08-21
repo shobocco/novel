@@ -13,39 +13,27 @@
           "type": "showCharacter",
           "character": "hero",
           "expression": "normal",
-          "position": "left"
+          "position": "center"
         },
         {
-          "type": "showCharacter",
-          "character": "bahamut",
-          "expression": "normal",
-          "position": "right"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "……終わった。借金がないって、こんなに空気がうまいんだな。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "これからどうする？"
+          "type": "narration",
+          "text": "最終査定は成立した。バハムートは残価精算のため、神様のもとへ返却された。"
         },
         {
           "type": "dialogue",
           "speaker": "hero",
-          "text": "普通の冒険者に戻る。お前も来るか？"
+          "text": "……終わった。本当に、今回はひどい目にあった。"
         },
         {
           "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "契約が終わっても、私はお前の相棒だ。"
+          "speaker": "hero",
+          "text": "けど、これで自由だ。街に帰ろう。"
         },
         {
           "type": "ending",
           "id": "normal_end",
           "title": "NORMAL END",
-          "text": "魔王討伐とバハムートの査定に成功し、主人公は借金から解放された。"
+          "text": "魔王討伐とバハムートの査定に成功。バハムートを返却し、借金から解放された主人公は一人で街へ帰った。"
         }
       ]
     },
