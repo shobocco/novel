@@ -22,6 +22,10 @@
           "position": "right"
         },
         {
+          "type": "showEnemy",
+          "enemy": "orc"
+        },
+        {
           "type": "dialogue",
           "speaker": "hero",
           "text": "次はオークか。ゴブリンより報酬は高いけど、強さも段違いらしい。"
@@ -50,6 +54,9 @@
     },
     "scene_002": {
       "steps": [
+        {
+          "type": "hideEnemy"
+        },
         {
           "type": "narration",
           "text": "主人公とバハムートは連携し、オークを討伐した。"

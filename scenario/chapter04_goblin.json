@@ -22,6 +22,10 @@
           "position": "right"
         },
         {
+          "type": "showEnemy",
+          "enemy": "goblin"
+        },
+        {
           "type": "dialogue",
           "speaker": "hero",
           "text": "いた。あれが依頼のゴブリンだな。"
@@ -46,6 +50,9 @@
     },
     "scene_002": {
       "steps": [
+        {
+          "type": "hideEnemy"
+        },
         {
           "type": "narration",
           "text": "ゴブリンの討伐に成功した。"
