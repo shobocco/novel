@@ -1,25 +1,26 @@
 import * as UI from "./ui.js";import {change,compare,appraisal} from "./game_state.js";import {battleOptions,applyBattleResult} from "./battle.js";
 export class ScenarioEngine{
- constructor({state,balance,characters,enemies,onState,onEnding,onAutosave}){Object.assign(this,{state,balance,characters,enemies,onState,onEnding,onAutosave});this.file="";this.data=null;this.scene="";this.index=0;this.locked=false;this.typing=false;this.fullText="";this.timer=null}
+ constructor({state,balance,characters,enemies,onState,onEnding,onAutosave}){Object.assign(this,{state,balance,characters,enemies,onState,onEnding,onAutosave});this.file="";this.data=null;this.scene="";this.index=0;this.locked=false;this.typing=false;this.fullText="";this.timer=null;this.visualState={background:null,characters:{}}}
  async getJson(file,folder){try{const r=await fetch(`${folder}/${file}`);if(!r.ok)throw Error(`${r.status}`);return await r.json()}catch(e){const key=file.replace(/\.json$/,'');const source=folder.includes("scenario")?window.SCENARIO_BUNDLE?.[key]:window.DATA_BUNDLE?.[key];if(source)return structuredClone(source);throw new Error(`${file} の読み込みに失敗しました: ${e.message}`)}}
- async load(file,scene=null,index=0){this.locked=true;this.file=file;this.data=await this.getJson(file,"../scenario");this.scene=scene||this.data.startScene;this.index=index;this.state.chapter=this.data.chapter;console.debug("Scenario loaded",file);console.debug("Scene changed",this.scene);this.onState();this.onAutosave();const openingBackground=this.data.scenes[this.scene]?.steps?.slice(this.index).find(step=>step.type==="background")?.name;await UI.prepareBackground(openingBackground);await UI.chapter(this.data.title);this.locked=false;return this.run()}
+ async load(file,scene=null,index=0){this.locked=true;this.file=file;this.data=await this.getJson(file,"../scenario");this.scene=scene||this.data.startScene;this.index=index;this.state.chapter=this.data.chapter;console.debug("Scenario loaded",file);console.debug("Scene changed",this.scene);const prefixVisual=this.deriveVisualState();if(!this.visualState?.background)this.visualState=prefixVisual;const openingBackground=this.visualState.background||this.data.scenes[this.scene]?.steps?.slice(this.index).find(step=>step.type==="background")?.name;this.onState();this.onAutosave();await UI.prepareBackground(openingBackground);await UI.chapter(this.data.title);UI.hideAll();Object.values(this.visualState.characters||{}).forEach(c=>UI.showCharacter(c,this.characters));this.locked=false;return this.run()}
+ deriveVisualState(){const visual={background:null,characters:{}};for(const step of this.data.scenes[this.scene]?.steps?.slice(0,this.index)||[]){if(step.type==="background")visual.background=step.name;if(step.type==="showCharacter"){for(const[pos,c]of Object.entries(visual.characters))if(c.character===step.character)delete visual.characters[pos];visual.characters[step.position||"center"]={...step}}if(step.type==="hideCharacter")for(const[pos,c]of Object.entries(visual.characters))if(c.character===step.character)delete visual.characters[pos];if(step.type==="hideAllCharacters")visual.characters={}}return visual}
  current(){return this.data?.scenes?.[this.scene]?.steps?.[this.index]}
  goto(scene){if(!this.data.scenes[scene])throw Error(`存在しないscene: ${this.file} / ${scene}`);this.scene=scene;this.index=0;console.debug("Scene changed",scene);this.run()}
  advance(){if(this.locked)return;if(this.typing){this.finishTyping();return}this.index++;this.run()}
  async run(){try{let guard=0;while(!this.locked){if(++guard>100)throw Error("自動実行stepが100件を超えました");const step=this.current();if(!step)throw Error(`stepがありません: ${this.file}/${this.scene}/${this.index}`);console.debug("Step executed",step.type,this.file,this.scene,this.index);const pause=await this.execute(step);this.onState();if(pause)return;this.index++}}catch(e){console.error(e);UI.error(`進行エラー: ${e.message}`)}}
  async execute(s){switch(s.type){
  case"dialogue":case"narration":this.say(s);return true;
- case"background":this.locked=true;this.finishTyping();await UI.sceneTransition(s.name);this.locked=false;break;
- case"showCharacter":UI.showCharacter(s,this.characters);break;
- case"hideCharacter":UI.hideCharacter(s.character);break;
- case"hideAllCharacters":UI.hideAll();break;
+ case"background":this.locked=true;this.finishTyping();await UI.sceneTransition(s.name);this.visualState.background=s.name;this.locked=false;break;
+ case"showCharacter":for(const[pos,c]of Object.entries(this.visualState.characters))if(c.character===s.character)delete this.visualState.characters[pos];this.visualState.characters[s.position||"center"]={...s};UI.showCharacter(s,this.characters);break;
+ case"hideCharacter":for(const[pos,c]of Object.entries(this.visualState.characters))if(c.character===s.character)delete this.visualState.characters[pos];UI.hideCharacter(s.character);break;
+ case"hideAllCharacters":this.visualState.characters={};UI.hideAll();break;
  case"choice":this.locked=true;UI.choices(s.options,async o=>{for(const a of o.actions||[])await this.action(a);this.locked=false;this.goto(o.next||o.scene)});return true;
  case"set":case"add":case"subtract":change(this.state,s.type,s.variable,s.value);if(s.variable==="route")console.debug("Route changed",s.value);break;
  case"setFlag":this.state.flags[s.flag]=s.value;console.debug("Flag changed",s.flag,s.value);break;
  case"condition":this.goto(compare(this.state[s.variable],s.operator,s.value)?s.trueNext:s.falseNext);return true;
  case"conditionFlag":this.goto(this.state.flags[s.flag]===s.value?s.trueNext:s.falseNext);return true;
  case"jump":this.goto(s.scene);return true;
- case"loadScenario":UI.hideAll();await this.load(s.file);return true;
+ case"loadScenario":UI.hideAll();this.visualState={background:null,characters:{}};await this.load(s.file);return true;
  case"battle":this.doBattle(s);return true;
  case"reward":await this.reward(s);break;
  case"loanPayment":await this.loan(s);return true;
@@ -38,5 +39,5 @@ export class ScenarioEngine{
  async reward(s){this.locked=true;const amount=s.amount??this.balance.rewards[s.enemy]??0;this.state.money+=amount;console.debug("Reward received",amount);this.onState();await UI.toast(`QUEST CLEAR\n${s.label||"討伐報酬"}\n+${amount.toLocaleString("ja-JP")} G`);this.locked=false}
  async loan(s){this.locked=true;const amount=s.amount??this.state.loanPayment;await UI.toast(`BAHAMUT LOAN\n今月のお支払い\n-${amount.toLocaleString("ja-JP")} G`);if(this.state.money>=amount){this.state.money-=amount;this.state.loanPaymentsMade++;console.debug("Loan payment",amount);this.onState();await UI.toast(`支払い完了\n現在の所持金\n${this.state.money.toLocaleString("ja-JP")} G`);this.locked=false;this.goto(s.successNext)}else{console.debug("Loan payment failed",this.state.money);this.locked=false;this.goto(s.failureNext)} }
  async appraise(s){this.locked=true;const result=appraisal(this.state,this.balance);this.state.finalAppraisal=result.value;const rank=result.value>=90?"S":result.value>=80?"A":result.value>=70?"B":result.value>=55?"C":"D";await UI.toast(`FINAL APPRAISAL\n査定ランク ${rank}\n評価値 ${result.value}\n基礎 ${this.state.bahamutValue} / 状態 ${result.condition>=0?"+":""}${result.condition} / 信頼 ${result.trust>=0?"+":""}${result.trust} / 酷使 ${result.overuse}` ,1800);this.locked=false;this.goto(result.value>=(s.requiredValue??this.balance.bahamut.normalEndingRequiredValue)?s.successNext:s.failureNext)}
- snapshot(){return{gameState:this.state,scenarioFile:this.file,sceneId:this.scene,stepIndex:this.index}}
+ snapshot(){return{gameState:this.state,scenarioFile:this.file,sceneId:this.scene,stepIndex:this.index,visualState:this.visualState}}
 }

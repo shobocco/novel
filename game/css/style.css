@@ -4,3 +4,6 @@
 .background-crossfade{background-position:center;background-size:cover;background-repeat:no-repeat;opacity:0;transition:opacity .55s ease}.background-crossfade.covered{opacity:1}
 .chapter-active #characters,.chapter-active #text-window,.chapter-active #status,.chapter-active #save-btn,.chapter-active #choices,.chapter-active #toast,.chapter-active #debug-panel{visibility:hidden;opacity:0}
 #game,#game *{-webkit-user-select:none;user-select:none}#game img{-webkit-user-drag:none}
+#status.contract-locked{display:none!important}
+@media(min-width:701px){.character-slot.left,.character-slot.center,.character-slot.right{transform:translateY(30%)}}
+@media(max-width:700px){.character-slot.left,.character-slot.center,.character-slot.right{transform:translateY(14%)}}
