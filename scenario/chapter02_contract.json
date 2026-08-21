@@ -1,0 +1,139 @@
+{
+  "chapter": "chapter02_contract",
+  "title": "第二章 10億ゴールドの相棒",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_heaven_temple"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "effect",
+          "name": "shake"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "こちらが、あなたの相棒――バハムートです♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "でかっ！？　これを俺に！？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "人間。私が力を貸す。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "しゃべった！？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "当然だ。私は知性ある竜だからな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……で、このドラゴンって、神様から無料でもらえるんですよね？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "もちろん、そんなわけありません♪"
+        },
+        {
+          "type": "document",
+          "name": "bahamut_contract"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "契約対象バハムート、契約価格……10億ゴールド！？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "でも安心してください。残価クレジットです。月々のお支払いは、たった10万ゴールド♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "残価クレジット！？　ファンタジー世界で聞く言葉じゃないだろ！"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "3年間お支払いいただき、最後に成長したバハムートの査定額と残債を相殺します。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "査定額が足りなかったら？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "もちろん、あなたにお支払いいただきます♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "払えなかったら？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "地下です♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "笑顔で言うな！"
+        },
+        {
+          "type": "setFlag",
+          "flag": "signedContract",
+          "value": true
+        },
+        {
+          "type": "setFlag",
+          "flag": "met_bahamut",
+          "value": true
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "……私も初めて知った。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "お前も契約内容知らなかったのかよ！"
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter03_guild.json"
+        }
+      ]
+    }
+  }
+}

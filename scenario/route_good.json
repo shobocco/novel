@@ -1,0 +1,164 @@
+{
+  "chapter": "route_good",
+  "title": "GOOD ROUTE 神様討伐",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_sky"
+        },
+        {
+          "type": "narration",
+          "text": "主人公、バハムート、魔王の三者は、神様のいる天空の神殿へ向かった。"
+        },
+        {
+          "type": "background",
+          "name": "bg_heaven_temple"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "神様！　契約について話をつけに来た！"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "魔王まで連れてくるなんて。あなた、本当に面白いですね。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "俺はもう、お前のおもちゃじゃない。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "神よ。貴様の遊びはここまでだ。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "我が主を苦しめた代償を払ってもらう。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "人間と魔王とドラゴンで、私を倒すつもりですか？"
+        },
+        {
+          "type": "effect",
+          "name": "flash"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "いいでしょう。最後まで楽しませてください。"
+        },
+        {
+          "type": "battle",
+          "enemy": "god",
+          "winNext": "scene_002",
+          "loseNext": "ending_bad_c"
+        }
+      ]
+    },
+    "scene_002": {
+      "steps": [
+        {
+          "type": "setFlag",
+          "flag": "defeatedGod",
+          "value": true
+        },
+        {
+          "type": "narration",
+          "text": "三人の連携によって、ついに神様は膝をついた。"
+        },
+        {
+          "type": "document",
+          "name": "bahamut_contract"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "その契約書に触らないでください……！"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "これが全部の元凶なんだろ。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "契約は絶対です！"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "最初からめちゃくちゃな契約だったんだ！"
+        },
+        {
+          "type": "effect",
+          "name": "flash"
+        },
+        {
+          "type": "narration",
+          "text": "主人公は契約書を破り捨てた。紙片は光となって消え、バハムートを縛っていた契約も消滅した。"
+        },
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "good_end"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    },
+    "ending_bad_c": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "defeatedBy",
+          "value": "god"
+        },
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "bad_end_c"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    }
+  }
+}

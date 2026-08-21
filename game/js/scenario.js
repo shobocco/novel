@@ -1,0 +1,42 @@
+import * as UI from "./ui.js";import {change,compare,appraisal} from "./game_state.js";import {battleOptions,applyBattleResult} from "./battle.js";
+export class ScenarioEngine{
+ constructor({state,balance,characters,enemies,onState,onEnding,onAutosave}){Object.assign(this,{state,balance,characters,enemies,onState,onEnding,onAutosave});this.file="";this.data=null;this.scene="";this.index=0;this.locked=false;this.typing=false;this.fullText="";this.timer=null}
+ async getJson(file,folder){try{const r=await fetch(`${folder}/${file}`);if(!r.ok)throw Error(`${r.status}`);return await r.json()}catch(e){const key=file.replace(/\.json$/,'');const source=folder.includes("scenario")?window.SCENARIO_BUNDLE?.[key]:window.DATA_BUNDLE?.[key];if(source)return structuredClone(source);throw new Error(`${file} の読み込みに失敗しました: ${e.message}`)}}
+ async load(file,scene=null,index=0){this.locked=true;this.file=file;this.data=await this.getJson(file,"../scenario");this.scene=scene||this.data.startScene;this.index=index;this.state.chapter=this.data.chapter;console.debug("Scenario loaded",file);console.debug("Scene changed",this.scene);this.onState();this.onAutosave();const openingBackground=this.data.scenes[this.scene]?.steps?.slice(this.index).find(step=>step.type==="background")?.name;await UI.prepareBackground(openingBackground);await UI.chapter(this.data.title);this.locked=false;return this.run()}
+ current(){return this.data?.scenes?.[this.scene]?.steps?.[this.index]}
+ goto(scene){if(!this.data.scenes[scene])throw Error(`存在しないscene: ${this.file} / ${scene}`);this.scene=scene;this.index=0;console.debug("Scene changed",scene);this.run()}
+ advance(){if(this.locked)return;if(this.typing){this.finishTyping();return}this.index++;this.run()}
+ async run(){try{let guard=0;while(!this.locked){if(++guard>100)throw Error("自動実行stepが100件を超えました");const step=this.current();if(!step)throw Error(`stepがありません: ${this.file}/${this.scene}/${this.index}`);console.debug("Step executed",step.type,this.file,this.scene,this.index);const pause=await this.execute(step);this.onState();if(pause)return;this.index++}}catch(e){console.error(e);UI.error(`進行エラー: ${e.message}`)}}
+ async execute(s){switch(s.type){
+ case"dialogue":case"narration":this.say(s);return true;
+ case"background":this.locked=true;this.finishTyping();await UI.sceneTransition(s.name);this.locked=false;break;
+ case"showCharacter":UI.showCharacter(s,this.characters);break;
+ case"hideCharacter":UI.hideCharacter(s.character);break;
+ case"hideAllCharacters":UI.hideAll();break;
+ case"choice":this.locked=true;UI.choices(s.options,async o=>{for(const a of o.actions||[])await this.action(a);this.locked=false;this.goto(o.next||o.scene)});return true;
+ case"set":case"add":case"subtract":change(this.state,s.type,s.variable,s.value);if(s.variable==="route")console.debug("Route changed",s.value);break;
+ case"setFlag":this.state.flags[s.flag]=s.value;console.debug("Flag changed",s.flag,s.value);break;
+ case"condition":this.goto(compare(this.state[s.variable],s.operator,s.value)?s.trueNext:s.falseNext);return true;
+ case"conditionFlag":this.goto(this.state.flags[s.flag]===s.value?s.trueNext:s.falseNext);return true;
+ case"jump":this.goto(s.scene);return true;
+ case"loadScenario":UI.hideAll();await this.load(s.file);return true;
+ case"battle":this.doBattle(s);return true;
+ case"reward":await this.reward(s);break;
+ case"loanPayment":await this.loan(s);return true;
+ case"appraisal":await this.appraise(s);return true;
+ case"ending":console.debug("Ending reached",s.id);this.locked=true;UI.ending(s);this.onEnding(s);return true;
+ case"statusMessage":this.locked=true;await UI.toast(`${s.text}\n${Number(this.state[s.variable]).toLocaleString("ja-JP")}${s.suffix||""}`);this.locked=false;break;
+ case"effect":UI.effect(s.name);break;
+ case"wait":this.locked=true;await new Promise(r=>setTimeout(r,Math.min(s.duration||0,2500)));this.locked=false;break;
+ case"eventCG":await UI.documentModal(`../events/${s.name}`);break;
+ case"document":this.locked=true;await UI.documentModal(s.name);this.locked=false;break;
+ default:console.warn("Unknown scenario step type:",s.type);break}return false}
+ async action(a){if(["set","add","subtract"].includes(a.type))change(this.state,a.type,a.variable,a.value);else if(a.type==="setFlag")this.state.flags[a.flag]=a.value;else console.warn("Unknown choice action:",a.type)}
+ say(s){this.fullText=s.text||"";UI.els.speaker.textContent=s.type==="dialogue"?(this.characters[s.speaker]?.name||s.speaker):"";UI.els.text.textContent="";UI.els.next.style.display="none";this.typing=true;let i=0;clearInterval(this.timer);this.timer=setInterval(()=>{UI.els.text.textContent=this.fullText.slice(0,++i);if(i>=this.fullText.length)this.finishTyping()},this.balance.ui.typewriterMsPerCharacter||25)}
+ finishTyping(){clearInterval(this.timer);UI.els.text.textContent=this.fullText;UI.els.next.style.display="block";this.typing=false}
+ doBattle(s){this.locked=true;UI.els.speaker.textContent="BATTLE";UI.els.text.textContent=`${this.enemies[s.enemy]?.name||s.enemy}が現れた！`;UI.choices(battleOptions(s.enemy,this.enemies),o=>{applyBattleResult(this.state,s.enemy,this.enemies,o);this.locked=false;this.goto(o.result==="win"?s.winNext:s.loseNext)})}
+ async reward(s){this.locked=true;const amount=s.amount??this.balance.rewards[s.enemy]??0;this.state.money+=amount;console.debug("Reward received",amount);this.onState();await UI.toast(`QUEST CLEAR\n${s.label||"討伐報酬"}\n+${amount.toLocaleString("ja-JP")} G`);this.locked=false}
+ async loan(s){this.locked=true;const amount=s.amount??this.state.loanPayment;await UI.toast(`BAHAMUT LOAN\n今月のお支払い\n-${amount.toLocaleString("ja-JP")} G`);if(this.state.money>=amount){this.state.money-=amount;this.state.loanPaymentsMade++;console.debug("Loan payment",amount);this.onState();await UI.toast(`支払い完了\n現在の所持金\n${this.state.money.toLocaleString("ja-JP")} G`);this.locked=false;this.goto(s.successNext)}else{console.debug("Loan payment failed",this.state.money);this.locked=false;this.goto(s.failureNext)} }
+ async appraise(s){this.locked=true;const result=appraisal(this.state,this.balance);this.state.finalAppraisal=result.value;const rank=result.value>=90?"S":result.value>=80?"A":result.value>=70?"B":result.value>=55?"C":"D";await UI.toast(`FINAL APPRAISAL\n査定ランク ${rank}\n評価値 ${result.value}\n基礎 ${this.state.bahamutValue} / 状態 ${result.condition>=0?"+":""}${result.condition} / 信頼 ${result.trust>=0?"+":""}${result.trust} / 酷使 ${result.overuse}` ,1800);this.locked=false;this.goto(result.value>=(s.requiredValue??this.balance.bahamut.normalEndingRequiredValue)?s.successNext:s.failureNext)}
+ snapshot(){return{gameState:this.state,scenarioFile:this.file,sceneId:this.scene,stepIndex:this.index}}
+}

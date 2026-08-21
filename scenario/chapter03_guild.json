@@ -1,0 +1,79 @@
+{
+  "chapter": "chapter03_guild",
+  "title": "第三章 冒険者ギルド",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_guild"
+        },
+        {
+          "type": "hideAllCharacters"
+        },
+        {
+          "type": "showCharacter",
+          "character": "guild_receptionist",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "おかえりなさいませ。……って、その後ろの巨大な竜は！？"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "神様から借りました。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "借りた……？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "10億ゴールドです。月10万。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "……それ、本当に大丈夫なんですか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "俺もそう思います。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "では、まずは近郊の森で増えているゴブリンの討伐をお願いできますか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "討伐報酬は50,000Gです。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "受けます。今は一ゴールドでも欲しい。"
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter04_goblin.json"
+        }
+      ]
+    }
+  }
+}

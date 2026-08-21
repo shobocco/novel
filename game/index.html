@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>残クレバハムートで魔王討伐</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="game" aria-live="polite">
+    <section id="title-screen" class="screen active">
+      <div class="title-card"><p class="eyebrow">FANTASY × RESIDUAL VALUE LOAN</p><h1>残クレバハムートで<br><span>魔王討伐</span></h1><p>10億Gの相棒と、月々10万Gの冒険。</p><div class="title-actions"><button id="start-btn">GAME START</button><button id="continue-btn" class="secondary">CONTINUE</button><button id="debug-start-btn" class="ghost">DEBUG START</button></div></div>
+    </section>
+    <section id="play-screen" class="screen">
+      <div id="background"></div><div id="effect-layer"></div><div id="chapter-card"></div>
+      <div id="characters"><div class="character-slot left"></div><div class="character-slot center"></div><div class="character-slot right"></div></div>
+      <aside id="status"><h2>CONTRACT STATUS</h2><dl><div><dt>所持金</dt><dd id="money">0 G</dd></div><div><dt>次回支払</dt><dd id="payment">0 G</dd></div><div><dt>返済回数</dt><dd id="payments">0 / 0</dd></div></dl><hr><p id="bahamut-status"></p></aside>
+      <div id="toast"></div><div id="choices"></div>
+      <div id="text-window"><div id="speaker"></div><p id="text"></p><span id="next-mark">▼</span></div>
+      <div id="debug-panel"><div id="debug-values"></div><div><button data-debug="money">+100,000 G</button><button data-debug="value">価値 +10</button><button data-debug="condition">状態 +10</button><button data-debug="trust">信頼 +10</button></div></div>
+      <button id="save-btn" title="現在地点を保存">SAVE</button>
+    </section>
+    <section id="ending-screen" class="screen"><div class="ending-card"><p>STORY COMPLETE</p><h2 id="ending-title"></h2><div id="ending-text"></div><button id="title-btn">タイトルへ戻る</button></div></section>
+    <div id="modal" class="modal"><div class="modal-card"><button id="modal-close" aria-label="閉じる">×</button><img id="modal-image" alt="書類"><p id="modal-caption"></p></div></div>
+    <div id="error-box"></div>
+  </main>
+  <script src="js/scenario_bundle.js"></script>
+  <script src="js/game_bundle.js"></script>
+</body>
+</html>

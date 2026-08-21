@@ -1,0 +1,107 @@
+{
+  "project": {
+    "title": "残クレバハムートで魔王討伐",
+    "type": "visual_novel_prototype",
+    "version": "0.1.0",
+    "language": "ja"
+  },
+  "entryPoints": {
+    "game": "game/index.html",
+    "scenario": "scenario/chapter01_intro.json"
+  },
+  "documents": [
+    "README.md",
+    "docs/scenario_spec.md",
+    "docs/economy_system.md",
+    "docs/ending_conditions.md",
+    "docs/asset_list.md"
+  ],
+  "scenario": {
+    "directory": "scenario/",
+    "entry": "scenario/chapter01_intro.json",
+    "files": [
+      "scenario/chapter01_intro.json",
+      "scenario/chapter02_contract.json",
+      "scenario/chapter03_guild.json",
+      "scenario/chapter04_goblin.json",
+      "scenario/chapter05_orc.json",
+      "scenario/chapter06_journey.json",
+      "scenario/chapter07_demon_realm.json",
+      "scenario/chapter08_demon_king.json",
+      "scenario/chapter09_truth.json",
+      "scenario/chapter10_branch.json",
+      "scenario/route_normal.json",
+      "scenario/route_good.json",
+      "scenario/endings.json"
+    ]
+  },
+  "gameData": {
+    "directory": "game/data/",
+    "characters": "game/data/characters.json",
+    "enemies": "game/data/enemies.json",
+    "balance": "game/data/game_balance.json"
+  },
+  "assets": {
+    "root": "assets/",
+    "characters": "assets/characters/",
+    "enemies": "assets/enemies/",
+    "backgrounds": "assets/backgrounds/",
+    "documents": "assets/documents/",
+    "events": "assets/events/",
+    "ui": "assets/ui/",
+    "effects": "assets/effects/"
+  },
+  "requiredP0Assets": [
+    "assets/characters/hero/hero_normal.png",
+    "assets/characters/god/god_normal.png",
+    "assets/characters/demon_king/demon_king_normal.png",
+    "assets/characters/bahamut/bahamut_normal.png",
+    "assets/characters/guild_receptionist/guild_receptionist_normal.png",
+    "assets/enemies/goblin.png",
+    "assets/enemies/orc.png",
+    "assets/backgrounds/bg_town_day.png",
+    "assets/backgrounds/bg_guild.png",
+    "assets/backgrounds/bg_forest.png",
+    "assets/backgrounds/bg_road.png",
+    "assets/backgrounds/bg_demon_castle.png",
+    "assets/backgrounds/bg_throne_room.png",
+    "assets/backgrounds/bg_sky.png",
+    "assets/backgrounds/bg_heaven_temple.png",
+    "assets/documents/bahamut_contract.png",
+    "assets/documents/loan_invoice.png"
+  ],
+  "gameStateDefaults": {
+    "money": 120000,
+    "loanPaymentsMade": 0,
+    "chapter": 1,
+    "route": null,
+    "endingId": null,
+    "defeatedBy": null,
+    "flags": {}
+  },
+  "implementation": {
+    "technology": [
+      "HTML",
+      "CSS",
+      "Vanilla JavaScript"
+    ],
+    "buildRequired": false,
+    "debugMode": true,
+    "saveSystem": "localStorage",
+    "scenarioDriven": true
+  },
+  "fallbackRules": {
+    "missingExpression": "Use the character's normal expression.",
+    "missingImage": "Use a CSS placeholder and log 'Missing asset:' to the console.",
+    "unknownScenarioStep": "Log a warning and continue to the next scenario step."
+  },
+  "codexInstructions": [
+    "Read README.md and manifest.json before implementation.",
+    "Then read all files listed in documents.",
+    "Treat scenario/*.json as the playable scenario source.",
+    "Treat game/data/*.json as the source of character, enemy, and balance data.",
+    "Do not modify, regenerate, or overwrite files under assets/.",
+    "Prioritize a fully playable prototype over visual polish.",
+    "Verify GOOD END, NORMAL END, BAD END A, BAD END B, and BAD END C before considering the prototype complete."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "initialMoney": 120000,
+  "loan": {
+    "payment": 100000,
+    "requiredPayments": 6
+  },
+  "rewards": {
+    "goblin": 50000,
+    "goblin_leader": 80000,
+    "orc": 90000,
+    "orc_king": 150000,
+    "wyvern": 180000,
+    "golem": 200000,
+    "demon_soldier": 120000
+  },
+  "bahamut": {
+    "initialValue": 50,
+    "initialCondition": 100,
+    "initialTrust": 0,
+    "normalEndingRequiredValue": 70,
+    "conditionBonus": {
+      "90": 15,
+      "70": 10,
+      "50": 0,
+      "below50": -10
+    },
+    "trustBonus": {
+      "20": 10,
+      "10": 5,
+      "below0": -10,
+      "default": 0
+    },
+    "overusePenalty": {
+      "6": -15,
+      "4": -10,
+      "2": -5,
+      "default": 0
+    }
+  },
+  "battle": {
+    "randomEnabled": false,
+    "heroDefaultResult": "win",
+    "bahamutDefaultResult": "win"
+  },
+  "ui": {
+    "currencySuffix": " G",
+    "typewriterMsPerCharacter": 25
+  },
+  "debug": {
+    "enabled": true,
+    "moneyIncrement": 100000,
+    "bahamutValueIncrement": 10,
+    "bahamutConditionIncrement": 10,
+    "bahamutTrustIncrement": 10
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "chapter": "chapter08_demon_king",
+  "title": "第八章 魔王との対面",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_throne_room"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "よく来た、人間。神に選ばれた冒険者とはお前か。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "そうだ。世界を救うため、お前を倒しに来た。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "世界を救う、か。……ところで、その黒竜は？"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "バハムート。神様から借りた。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "借りた？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "10億ゴールド。残価クレジットで、月10万。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "…………。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "なんだよ、その顔。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "……それは詐欺ではないのか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "え？"
+        },
+        {
+          "type": "setFlag",
+          "flag": "heardGodTruth",
+          "value": true
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter09_truth.json"
+        }
+      ]
+    }
+  }
+}

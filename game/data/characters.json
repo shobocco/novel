@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "name": "主人公",
+    "assetBase": "assets/characters/hero/hero",
+    "defaultExpression": "normal",
+    "scale": 1.0
+  },
+  "god": {
+    "name": "神様",
+    "assetBase": "assets/characters/god/god",
+    "defaultExpression": "normal",
+    "scale": 1.0
+  },
+  "bahamut": {
+    "name": "バハムート",
+    "assetBase": "assets/characters/bahamut/bahamut",
+    "defaultExpression": "normal",
+    "scale": 1.18
+  },
+  "demon_king": {
+    "name": "魔王",
+    "assetBase": "assets/characters/demon_king/demon_king",
+    "defaultExpression": "normal",
+    "scale": 1.0
+  },
+  "guild_receptionist": {
+    "name": "ギルド受付嬢",
+    "assetBase": "assets/characters/guild_receptionist/guild_receptionist",
+    "defaultExpression": "normal",
+    "scale": 0.95
+  },
+  "mysterious_demon": {
+    "name": "謎の魔族",
+    "assetBase": "assets/characters/mysterious_demon/mysterious_demon",
+    "defaultExpression": "normal",
+    "scale": 1.0
+  }
+}

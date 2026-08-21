@@ -1,0 +1,101 @@
+{
+  "chapter": "chapter09_truth",
+  "title": "第九章 神様の真実",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_throne_room"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "神は暇つぶしでこの戦いを始めた。お前は世界を救う勇者ではない。神の遊び道具だ。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "そんな話、信じられるか。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "なら聞こう。なぜ世界救済の代償を、お前一人の負債として背負わせる？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "なぜ神自身は一ゴールドも負担しない？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "主人公さん♪　魔王のお話なんて聞かなくていいですよ。早く倒してください♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "神様。ひとつ確認したい。魔王を倒したら、この契約は本当に終わるんだよな？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "もちろん。契約条件に従って、最後にきちんと査定します♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……『魔王を倒したらチャラ』じゃないのかよ。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "やはりな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "細かいことを気にする人ですね。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "人間。私と組まないか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "魔王と……？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "倒すべき相手を間違えている。"
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter10_branch.json"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "chapter": "endings",
+  "title": "エンディング",
+  "startScene": "ending_router",
+  "scenes": {
+    "ending_normal": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_road"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……終わった。借金がないって、こんなに空気がうまいんだな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "これからどうする？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "普通の冒険者に戻る。お前も来るか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "契約が終わっても、私はお前の相棒だ。"
+        },
+        {
+          "type": "ending",
+          "id": "normal_end",
+          "title": "NORMAL END",
+          "text": "魔王討伐とバハムートの査定に成功し、主人公は借金から解放された。"
+        }
+      ]
+    },
+    "ending_bad_a": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_guild"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "今月のお支払いが確認できません♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "ちょっと待って！　次の依頼で必ず――"
+        },
+        {
+          "type": "effect",
+          "name": "fade_black"
+        },
+        {
+          "type": "ending",
+          "id": "bad_end_a",
+          "title": "BAD END A",
+          "text": "ローンの支払いができず、主人公は地下へ送られた。"
+        }
+      ]
+    },
+    "ending_bad_b": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_heaven_temple"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "査定額が残債に届きませんでした♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "魔王を倒したんだぞ！？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "それと契約は別のお話です♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "……すまない。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "お前が謝ることじゃない！"
+        },
+        {
+          "type": "effect",
+          "name": "fade_black"
+        },
+        {
+          "type": "ending",
+          "id": "bad_end_b",
+          "title": "BAD END B",
+          "text": "魔王は倒した。しかしバハムートの査定額が足りず、主人公は地下へ送られた。"
+        }
+      ]
+    },
+    "ending_bad_c": {
+      "steps": [
+        {
+          "type": "effect",
+          "name": "fade_black"
+        },
+        {
+          "type": "ending",
+          "id": "bad_end_c",
+          "title": "BAD END C",
+          "text": "最終決戦に敗北した。GAME OVER。"
+        }
+      ]
+    },
+    "ending_good": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_road"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "結局、お前は俺のところに残るのか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "契約はなくなった。だが、私はお前と旅をすることにした。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……そっか。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "また魔物が暴れている。暇なら手伝え。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "魔王なのに人使い荒いな……。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "行くのか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "まあ、冒険者だからな。"
+        },
+        {
+          "type": "ending",
+          "id": "good_end",
+          "title": "GOOD END",
+          "text": "ローン契約そのものが消滅しました"
+        }
+      ]
+    },
+    "ending_router": {
+      "steps": [
+        {
+          "type": "condition",
+          "variable": "endingId",
+          "operator": "==",
+          "value": "normal_end",
+          "trueNext": "ending_normal",
+          "falseNext": "check_bad_a"
+        }
+      ]
+    },
+    "check_bad_a": {
+      "steps": [
+        {
+          "type": "condition",
+          "variable": "endingId",
+          "operator": "==",
+          "value": "bad_end_a",
+          "trueNext": "ending_bad_a",
+          "falseNext": "check_bad_b"
+        }
+      ]
+    },
+    "check_bad_b": {
+      "steps": [
+        {
+          "type": "condition",
+          "variable": "endingId",
+          "operator": "==",
+          "value": "bad_end_b",
+          "trueNext": "ending_bad_b",
+          "falseNext": "check_bad_c"
+        }
+      ]
+    },
+    "check_bad_c": {
+      "steps": [
+        {
+          "type": "condition",
+          "variable": "endingId",
+          "operator": "==",
+          "value": "bad_end_c",
+          "trueNext": "ending_bad_c",
+          "falseNext": "ending_good"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "chapter": "chapter10_branch",
+  "title": "第十章 選択",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_throne_room"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "選べ。神の命令どおり私を倒すか、それとも私と共に神へ反逆するか。"
+        },
+        {
+          "type": "choice",
+          "options": [
+            {
+              "text": "魔王を倒す",
+              "actions": [
+                {
+                  "type": "set",
+                  "variable": "route",
+                  "value": "normal"
+                },
+                {
+                  "type": "setFlag",
+                  "flag": "joinedDemonKing",
+                  "value": false
+                }
+              ],
+              "next": "scene_normal"
+            },
+            {
+              "text": "魔王を信じる",
+              "actions": [
+                {
+                  "type": "set",
+                  "variable": "route",
+                  "value": "good"
+                },
+                {
+                  "type": "setFlag",
+                  "flag": "joinedDemonKing",
+                  "value": true
+                }
+              ],
+              "next": "scene_good"
+            }
+          ]
+        }
+      ]
+    },
+    "scene_normal": {
+      "steps": [
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……ここまで来た。俺は最初の目的を果たす。"
+        },
+        {
+          "type": "loadScenario",
+          "file": "route_normal.json"
+        }
+      ]
+    },
+    "scene_good": {
+      "steps": [
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "正直、お前のほうが神様より信用できる。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "私も同感だ。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "……複雑な気分だが、歓迎しよう。"
+        },
+        {
+          "type": "loadScenario",
+          "file": "route_good.json"
+        }
+      ]
+    }
+  }
+}

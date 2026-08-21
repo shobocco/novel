@@ -1,0 +1,166 @@
+{
+  "chapter": "chapter04_goblin",
+  "title": "第四章 ゴブリン討伐",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_forest"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "left"
+        },
+        {
+          "type": "showCharacter",
+          "character": "bahamut",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "いた。あれが依頼のゴブリンだな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "私なら一息で終わる。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "いや、最初くらい俺も戦う。借金だけ背負って何もしないのは嫌だ。"
+        },
+        {
+          "type": "battle",
+          "enemy": "goblin",
+          "winNext": "scene_002",
+          "loseNext": "ending_bad_c"
+        }
+      ]
+    },
+    "scene_002": {
+      "steps": [
+        {
+          "type": "narration",
+          "text": "ゴブリンの討伐に成功した。"
+        },
+        {
+          "type": "add",
+          "variable": "bahamutValue",
+          "value": 5
+        },
+        {
+          "type": "add",
+          "variable": "bahamutTrust",
+          "value": 2
+        },
+        {
+          "type": "background",
+          "name": "bg_guild"
+        },
+        {
+          "type": "showCharacter",
+          "character": "guild_receptionist",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "guild_receptionist",
+          "text": "討伐確認が取れました。こちらが報酬です。"
+        },
+        {
+          "type": "reward",
+          "enemy": "goblin",
+          "label": "ゴブリン討伐報酬"
+        },
+        {
+          "type": "statusMessage",
+          "text": "現在の所持金",
+          "variable": "money",
+          "suffix": " G"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "right"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "主人公さん♪　今月のお支払い日です♪"
+        },
+        {
+          "type": "document",
+          "name": "loan_invoice"
+        },
+        {
+          "type": "loanPayment",
+          "successNext": "scene_003",
+          "failureNext": "ending_bad_a"
+        }
+      ]
+    },
+    "scene_003": {
+      "steps": [
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……討伐報酬をもらって喜んだ直後に10万消えた。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "bahamut",
+          "text": "世知辛いな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "原因のお前が言うな！"
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter05_orc.json"
+        }
+      ]
+    },
+    "ending_bad_a": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "bad_end_a"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    },
+    "ending_bad_c": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "defeatedBy",
+          "value": "goblin"
+        },
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "bad_end_c"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "goblin": {
+    "name": "ゴブリン",
+    "asset": "assets/enemies/goblin.png",
+    "rewardKey": "goblin",
+    "difficulty": 1,
+    "battleType": "choice",
+    "bahamutConditionCost": 5,
+    "bahamutTrustOnHeroFight": 2
+  },
+  "orc": {
+    "name": "オーク",
+    "asset": "assets/enemies/orc.png",
+    "rewardKey": "orc",
+    "difficulty": 2,
+    "battleType": "choice",
+    "bahamutConditionCost": 8,
+    "bahamutTrustOnHeroFight": 3
+  },
+  "goblin_leader": {
+    "name": "ゴブリンリーダー",
+    "asset": "assets/enemies/goblin_leader.png",
+    "rewardKey": "goblin_leader",
+    "difficulty": 2,
+    "battleType": "choice",
+    "bahamutConditionCost": 8,
+    "bahamutTrustOnHeroFight": 3
+  },
+  "orc_king": {
+    "name": "オークキング",
+    "asset": "assets/enemies/orc_king.png",
+    "rewardKey": "orc_king",
+    "difficulty": 4,
+    "battleType": "choice",
+    "bahamutConditionCost": 15,
+    "bahamutTrustOnHeroFight": 4
+  },
+  "wyvern": {
+    "name": "ワイバーン",
+    "asset": "assets/enemies/wyvern.png",
+    "rewardKey": "wyvern",
+    "difficulty": 4,
+    "battleType": "choice",
+    "bahamutConditionCost": 15,
+    "bahamutTrustOnHeroFight": 4
+  },
+  "golem": {
+    "name": "ゴーレム",
+    "asset": "assets/enemies/golem.png",
+    "rewardKey": "golem",
+    "difficulty": 5,
+    "battleType": "choice",
+    "bahamutConditionCost": 18,
+    "bahamutTrustOnHeroFight": 5
+  },
+  "demon_soldier": {
+    "name": "魔王軍兵士",
+    "asset": "assets/enemies/demon_soldier.png",
+    "rewardKey": "demon_soldier",
+    "difficulty": 3,
+    "battleType": "choice",
+    "bahamutConditionCost": 10,
+    "bahamutTrustOnHeroFight": 3
+  },
+  "demon_king": {
+    "name": "魔王",
+    "asset": "assets/characters/demon_king/demon_king_normal.png",
+    "difficulty": 5,
+    "battleType": "final",
+    "fixedOutcome": "win",
+    "loseEnding": "bad_end_c"
+  },
+  "god": {
+    "name": "神様",
+    "asset": "assets/characters/god/god_normal.png",
+    "difficulty": 5,
+    "battleType": "final",
+    "fixedOutcome": "win",
+    "loseEnding": "bad_end_c"
+  }
+}

@@ -1,0 +1,1 @@
+const KEY="zankure-bahamut-save-v1";export const hasSave=()=>!!localStorage.getItem(KEY);export function save(data){localStorage.setItem(KEY,JSON.stringify(data))}export function load(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){console.warn("Save load failed",e);return null}}export function clear(){localStorage.removeItem(KEY)}

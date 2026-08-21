@@ -1,0 +1,120 @@
+{
+  "chapter": "route_normal",
+  "title": "NORMAL ROUTE 魔王討伐",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_throne_room"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "demon_king",
+          "text": "そうか。ならば手加減はしない。来い、冒険者。"
+        },
+        {
+          "type": "battle",
+          "enemy": "demon_king",
+          "winNext": "scene_002",
+          "loseNext": "ending_bad_c"
+        }
+      ]
+    },
+    "scene_002": {
+      "steps": [
+        {
+          "type": "setFlag",
+          "flag": "defeatedDemonKing",
+          "value": true
+        },
+        {
+          "type": "narration",
+          "text": "激戦の末、主人公とバハムートは魔王を打ち破った。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "おめでとうございます♪　では契約終了のお手続きです。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "待ってました。これで自由だ……！"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "まずはバハムートの最終査定からですね♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……嫌な予感しかしない。"
+        },
+        {
+          "type": "appraisal",
+          "successNext": "ending_normal",
+          "failureNext": "ending_bad_b"
+        }
+      ]
+    },
+    "ending_normal": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "normal_end"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    },
+    "ending_bad_b": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "bad_end_b"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    },
+    "ending_bad_c": {
+      "steps": [
+        {
+          "type": "set",
+          "variable": "defeatedBy",
+          "value": "demon_king"
+        },
+        {
+          "type": "set",
+          "variable": "endingId",
+          "value": "bad_end_c"
+        },
+        {
+          "type": "loadScenario",
+          "file": "endings.json"
+        }
+      ]
+    }
+  }
+}

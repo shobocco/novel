@@ -1,0 +1,100 @@
+{
+  "chapter": "chapter01_intro",
+  "title": "第一章 冒険者と神様",
+  "startScene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "steps": [
+        {
+          "type": "background",
+          "name": "bg_town_day"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "narration",
+          "text": "剣と魔法の世界。人々は魔物の脅威にさらされながらも、街を築き、冒険者たちは日々の依頼で生計を立てていた。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "今日の依頼も終わり。これで今夜の宿代くらいにはなるな。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "魔王討伐だの勇者だの、そういう大層な話とは無縁でいたいもんだ。"
+        },
+        {
+          "type": "effect",
+          "name": "flash"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "うわっ、なんだこの光！？"
+        },
+        {
+          "type": "hideAllCharacters"
+        },
+        {
+          "type": "background",
+          "name": "bg_sky"
+        },
+        {
+          "type": "narration",
+          "text": "次の瞬間、主人公は雲海の上に浮かぶ不思議な空間へ立っていた。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "normal",
+          "position": "center"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "ようこそ、選ばれし冒険者さん。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "……どちらさまですか？"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "神様です♪"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "急に信用しづらい自己紹介だな……。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "あなたには、魔王を討伐して世界を救う使命があります。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "hero",
+          "text": "いや、俺ただの冒険者なんですけど。"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "god",
+          "text": "大丈夫。特別な力を用意しましたから。"
+        },
+        {
+          "type": "loadScenario",
+          "file": "chapter02_contract.json"
+        }
+      ]
+    }
+  }
+}
