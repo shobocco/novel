@@ -1,5 +1,12 @@
 {
   "initialMoney": 120000,
+  "hero": {
+    "initialLevel": 1,
+    "initialMaxHp": 30,
+    "initialAttack": 8,
+    "hpGrowthPerWin": 5,
+    "attackGrowthPerWin": 2
+  },
   "loan": {
     "payment": 100000,
     "requiredPayments": 6
