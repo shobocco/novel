@@ -1,4 +1,4 @@
-import {createState} from "./game_state.js";import {ScenarioEngine} from "./scenario.js";import * as UI from "./ui.js";import * as Save from "./save.js";
+import {createState,appraisal} from "./game_state.js";import {ScenarioEngine} from "./scenario.js";import * as UI from "./ui.js";import * as Save from "./save.js";
 let balance,characters,enemies,state,engine,DEBUG_MODE=false;const $=s=>document.querySelector(s),currency=n=>`${Number(n).toLocaleString("ja-JP")} G`;
 async function data(name){try{const r=await fetch(`data/${name}.json?v=${window.CACHE_BUST}`);if(!r.ok)throw Error(r.status);return await r.json()}catch(e){const d=window.DATA_BUNDLE?.[name];if(d)return structuredClone(d);throw Error(`${name}.json を読み込めません: ${e.message}`)}}
 async function boot(){try{[balance,characters,enemies]=await Promise.all([data("game_balance"),data("characters"),data("enemies")]);DEBUG_MODE=false;UI.preloadVisualAssets(characters,enemies,window.SCENARIO_BUNDLE);$("#continue-btn").disabled=!Save.hasSave();wire()}catch(e){UI.error(`起動エラー: ${e.message}`)}}
@@ -6,5 +6,5 @@ function wire(){$("#start-btn").onclick=()=>start(false);$("#debug-start-btn").o
 function makeEngine(){engine=new ScenarioEngine({state,balance,characters,enemies,onState:render,onEnding:()=>Save.clear(),onAutosave:()=>Save.save(engine.snapshot())})}
 async function start(debug){state=createState(balance);DEBUG_MODE=debug;makeEngine();UI.els.play.classList.add("chapter-active");UI.showScreen("play");UI.els.debug.classList.toggle("active",DEBUG_MODE);await engine.load("chapter01_intro.json")}
 async function continueGame(){const s=Save.load();if(!s)return;DEBUG_MODE=false;state={...createState(balance),...s.gameState,flags:{...(s.gameState.flags||{})}};makeEngine();if(s.visualState)engine.visualState=s.visualState;UI.els.play.classList.add("chapter-active");UI.showScreen("play");UI.els.debug.classList.remove("active");await engine.load(s.scenarioFile,s.sceneId,s.stepIndex)}
-function render(){UI.updateStatus(state,currency,DEBUG_MODE);if(DEBUG_MODE&&engine)UI.els.debugValues.textContent+=`\ncurrent: ${engine.file} / ${engine.scene} / ${engine.index}`}
+function render(){UI.updateStatus(state,currency,DEBUG_MODE,appraisal(state,balance).value);if(DEBUG_MODE&&engine)UI.els.debugValues.textContent+=`\ncurrent: ${engine.file} / ${engine.scene} / ${engine.index}`}
 boot();
