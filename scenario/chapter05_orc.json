@@ -41,10 +41,6 @@
           "text": "契約上って言い方やめてくれ。頭が痛くなる。"
         },
         {
-          "type": "background",
-          "name": "bg_forest"
-        },
-        {
           "type": "battle",
           "enemy": "orc",
           "winNext": "scene_002",
