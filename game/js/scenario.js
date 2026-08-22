@@ -1,12 +1,15 @@
 import * as UI from "./ui.js";import {change,compare,appraisal} from "./game_state.js";import {battleOptions,applyBattleResult,isRpgBattle,createRpgBattle,performRpgAction,applyVictoryGrowth} from "./battle.js";
 export class ScenarioEngine{
- constructor({state,balance,characters,enemies,onState,onEnding,onAutosave}){Object.assign(this,{state,balance,characters,enemies,onState,onEnding,onAutosave});this.file="";this.data=null;this.scene="";this.index=0;this.locked=false;this.typing=false;this.fullText="";this.timer=null;this.visualState={background:null,characters:{},enemy:null}}
- async getJson(file,folder){try{const r=await fetch(`${folder}/${file}?v=${window.CACHE_BUST}`);if(!r.ok)throw Error(`${r.status}`);return await r.json()}catch(e){const key=file.replace(/\.json$/,'');const source=folder.includes("scenario")?window.SCENARIO_BUNDLE?.[key]:window.DATA_BUNDLE?.[key];if(source)return structuredClone(source);throw new Error(`${file} の読み込みに失敗しました: ${e.message}`)}}
+ constructor({state,balance,characters,enemies,onState,onEnding,onAutosave}){Object.assign(this,{state,balance,characters,enemies,onState,onEnding,onAutosave});this.file="";this.data=null;this.scene="";this.index=0;this.locked=false;this.typing=false;this.skipMode=false;this.fullText="";this.timer=null;this.skipTimer=null;this.visualState={background:null,characters:{},enemy:null}}
+ async getJson(file,folder){try{const r=await fetch(`${folder}/${file}?v=${window.CACHE_BUST}`);if(!r.ok)throw Error(`${r.status}`);return await r.json()}catch(e){const key=file.replace(/\.json$/,'');const source=folder.includes("scenario")?window.SCENARIO_BUNDLE?.[key]:window.DATA_BUNDLE?.[key];if(source)return JSON.parse(JSON.stringify(source));throw new Error(`${file} の読み込みに失敗しました: ${e.message}`)}}
  async load(file,scene=null,index=0){this.locked=true;this.file=file;this.data=await this.getJson(file,"../scenario");this.scene=scene||this.data.startScene;this.index=index;this.state.chapter=this.data.chapter;console.debug("Scenario loaded",file);console.debug("Scene changed",this.scene);const prefixVisual=this.deriveVisualState();if(!this.visualState?.background)this.visualState=prefixVisual;const openingBackground=this.visualState.background||this.data.scenes[this.scene]?.steps?.slice(this.index).find(step=>step.type==="background")?.name;this.onState();this.onAutosave();await UI.prepareBackground(openingBackground);if(!["route_normal.json","route_good.json"].includes(file))await UI.chapter(this.data.title);UI.hideAll();UI.hideEnemy();Object.values(this.visualState.characters||{}).forEach(c=>UI.showCharacter(c,this.characters));if(this.visualState.enemy)UI.showEnemy(this.visualState.enemy,this.enemies);this.locked=false;return this.run()}
  deriveVisualState(){const visual={background:null,characters:{},enemy:null};for(const step of this.data.scenes[this.scene]?.steps?.slice(0,this.index)||[]){if(step.type==="background")visual.background=step.name;if(step.type==="showCharacter"){for(const[pos,c]of Object.entries(visual.characters))if(c.character===step.character)delete visual.characters[pos];visual.characters[step.position||"center"]={...step}}if(step.type==="hideCharacter")for(const[pos,c]of Object.entries(visual.characters))if(c.character===step.character)delete visual.characters[pos];if(step.type==="hideAllCharacters")visual.characters={};if(step.type==="showEnemy")visual.enemy=step.enemy;if(step.type==="hideEnemy")visual.enemy=null}return visual}
  current(){return this.data?.scenes?.[this.scene]?.steps?.[this.index]}
  goto(scene){if(!this.data.scenes[scene])throw Error(`存在しないscene: ${this.file} / ${scene}`);this.scene=scene;this.index=0;console.debug("Scene changed",scene);this.run()}
- advance(){if(this.locked)return;if(this.typing){this.finishTyping();return}this.index++;this.run()}
+ setSkip(enabled){this.skipMode=!!enabled;UI.setSkipActive(this.skipMode);clearTimeout(this.skipTimer);if(this.skipMode&&!this.locked){if(this.typing)this.finishTyping();this.scheduleSkip()}}
+ scheduleSkip(){clearTimeout(this.skipTimer);if(this.skipMode&&!this.locked)this.skipTimer=setTimeout(()=>this.advance(),100)}
+ stopSkip(){if(this.skipMode)this.setSkip(false)}
+ advance(){if(this.locked)return;clearTimeout(this.skipTimer);if(this.typing){this.finishTyping();if(this.skipMode)this.scheduleSkip();return}this.index++;this.run()}
  async run(){try{let guard=0;while(!this.locked){if(++guard>100)throw Error("自動実行stepが100件を超えました");const step=this.current();if(!step)throw Error(`stepがありません: ${this.file}/${this.scene}/${this.index}`);console.debug("Step executed",step.type,this.file,this.scene,this.index);const pause=await this.execute(step);this.onState();if(pause)return;this.index++}}catch(e){console.error(e);UI.error(`進行エラー: ${e.message}`)}}
  async execute(s){switch(s.type){
  case"dialogue":case"narration":this.say(s);return true;
@@ -16,26 +19,26 @@ export class ScenarioEngine{
  case"hideAllCharacters":this.visualState.characters={};UI.hideAll();break;
  case"showEnemy":this.visualState.enemy=s.enemy;UI.showEnemy(s.enemy,this.enemies);break;
  case"hideEnemy":this.visualState.enemy=null;UI.hideEnemy();break;
- case"choice":this.locked=true;UI.choices(s.options,async o=>{for(const a of o.actions||[])await this.action(a);this.locked=false;this.goto(o.next||o.scene)});return true;
+ case"choice":this.stopSkip();this.locked=true;UI.choices(s.options,async o=>{for(const a of o.actions||[])await this.action(a);this.locked=false;this.goto(o.next||o.scene)});return true;
  case"set":case"add":case"subtract":change(this.state,s.type,s.variable,s.value);if(s.variable==="route")console.debug("Route changed",s.value);break;
  case"setFlag":this.state.flags[s.flag]=s.value;console.debug("Flag changed",s.flag,s.value);break;
  case"condition":this.goto(compare(this.state[s.variable],s.operator,s.value)?s.trueNext:s.falseNext);return true;
  case"conditionFlag":this.goto(this.state.flags[s.flag]===s.value?s.trueNext:s.falseNext);return true;
  case"jump":this.goto(s.scene);return true;
  case"loadScenario":UI.hideAll();UI.hideEnemy();this.visualState={background:null,characters:{},enemy:null};await this.load(s.file);return true;
- case"battle":this.doBattle(s);return true;
+ case"battle":this.stopSkip();this.doBattle(s);return true;
  case"reward":await this.reward(s);break;
  case"loanPayment":await this.loan(s);return true;
  case"appraisal":await this.appraise(s);return true;
- case"ending":console.debug("Ending reached",s.id);this.locked=true;UI.ending(s);this.onEnding(s);return true;
+ case"ending":this.stopSkip();console.debug("Ending reached",s.id);this.locked=true;UI.ending(s);this.onEnding(s);return true;
  case"statusMessage":this.locked=true;await UI.toast(`${s.text}\n${Number(this.state[s.variable]).toLocaleString("ja-JP")}${s.suffix||""}`);this.locked=false;break;
  case"effect":UI.effect(s.name);break;
  case"wait":this.locked=true;await new Promise(r=>setTimeout(r,Math.min(s.duration||0,2500)));this.locked=false;break;
- case"eventCG":await UI.documentModal(`../events/${s.name}`);break;
- case"document":this.locked=true;await UI.documentModal(s.name);this.locked=false;break;
+ case"eventCG":this.stopSkip();await UI.documentModal(`../events/${s.name}`);break;
+ case"document":this.stopSkip();this.locked=true;await UI.documentModal(s.name);this.locked=false;break;
  default:console.warn("Unknown scenario step type:",s.type);break}return false}
  async action(a){if(["set","add","subtract"].includes(a.type))change(this.state,a.type,a.variable,a.value);else if(a.type==="setFlag")this.state.flags[a.flag]=a.value;else console.warn("Unknown choice action:",a.type)}
- say(s){this.fullText=s.text||"";UI.els.speaker.textContent=s.type==="dialogue"?(this.characters[s.speaker]?.name||this.enemies[s.speaker]?.name||s.speaker):"";UI.els.text.textContent="";UI.els.next.style.display="none";this.typing=true;let i=0;clearInterval(this.timer);this.timer=setInterval(()=>{UI.els.text.textContent=this.fullText.slice(0,++i);if(i>=this.fullText.length)this.finishTyping()},this.balance.ui.typewriterMsPerCharacter||25)}
+ say(s){this.fullText=s.text||"";UI.els.speaker.textContent=s.type==="dialogue"?(this.characters[s.speaker]?.name||this.enemies[s.speaker]?.name||s.speaker):"";UI.els.text.textContent="";UI.els.next.style.display="none";this.typing=true;clearInterval(this.timer);if(this.skipMode){this.finishTyping();this.scheduleSkip();return}let i=0;this.timer=setInterval(()=>{UI.els.text.textContent=this.fullText.slice(0,++i);if(i>=this.fullText.length)this.finishTyping()},this.balance.ui.typewriterMsPerCharacter||25)}
  finishTyping(){clearInterval(this.timer);UI.els.text.textContent=this.fullText;UI.els.next.style.display="block";this.typing=false}
  doBattle(s){if(isRpgBattle(s.enemy)){this.doRpgBattle(s);return}this.locked=true;UI.els.speaker.textContent="BATTLE";UI.els.text.textContent=`${this.enemies[s.enemy]?.name||s.enemy}が現れた！`;UI.choices(battleOptions(s.enemy,this.enemies),o=>{applyBattleResult(this.state,s.enemy,this.enemies,o);this.locked=false;this.goto(o.result==="win"?s.winNext:s.loseNext)})}
  doRpgBattle(s){this.locked=true;this.finishTyping();const battle=createRpgBattle(s.enemy,this.enemies,this.state);const render=()=>UI.renderRpgBattle(battle,action=>{performRpgAction(battle,this.state,this.enemies,action);this.onState();render();if(battle.ended)setTimeout(async()=>{await UI.toast(battle.result==="win"?"BATTLE WIN":"BATTLE LOST",850);if(battle.result==="win"&&!battle.growthApplied){battle.growthApplied=true;if(!battle.bahamutUsed)this.state.bahamutTrust+=this.enemies[s.enemy]?.bahamutTrustOnHeroFight||2;const growth=applyVictoryGrowth(this.state,this.balance,s.enemy);if(growth)await UI.toast(`LEVEL UP\nLV ${growth.level}\n最大HP ${growth.maxHp} / 攻撃力 ${growth.attack}`,1400)}if(battle.result==="lose")this.state.defeatedBy=s.enemy;UI.closeRpgBattle();this.locked=false;this.goto(battle.result==="win"?s.winNext:s.loseNext)},650)});render()}

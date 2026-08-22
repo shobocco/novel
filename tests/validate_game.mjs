@@ -8,20 +8,34 @@ const files=Object.fromEntries(fs.readdirSync(path.join(root,"scenario")).filter
 const balance=read("game/data/game_balance.json"),enemies=read("game/data/enemies.json");
 const errors=[];
 const directBundle=fs.readFileSync(path.join(root,"game/js/game_bundle.js"),"utf8");
+const indexHtml=fs.readFileSync(path.join(root,"game/index.html"),"utf8");
+const gameCss=fs.readFileSync(path.join(root,"game/css/style.css"),"utf8");
+if(/document\.write\s*\(/.test(indexHtml))errors.push("game/index.html: document.write remains and can fail during Firefox file:// startup");
+if(!indexHtml.includes('loadScript("scenario_bundle.js",()=>loadScript("game_bundle.js"))'))errors.push("game/index.html: ordered file:// bundle loading is missing");
+if(!gameCss.includes("height:100dvh")||!gameCss.includes("safe-area-inset-bottom"))errors.push("style.css: compact mobile battle viewport/safe-area handling is missing");
 if(/import\s+.*?\s+from\s+["']/.test(directBundle))errors.push("game_bundle.js: ES module import remains in the file:// classic bundle");
 if(/\bexport\s+(?:const|function|class|async\s+function)\b/.test(directBundle))errors.push("game_bundle.js: ES module export remains in the file:// classic bundle");
+if(/\bstructuredClone\b/.test(directBundle))errors.push("game_bundle.js: structuredClone remains and can break older Firefox file:// startup");
+if(!directBundle.includes("els.modal.onclick=close"))errors.push("game_bundle.js: document modal is not dismissible from the whole overlay");
 try{new Function(directBundle)}catch(error){errors.push(`game_bundle.js: classic script parse failed: ${error.message}`)}
 try{
-  const elements=new Map(),makeElement=()=>({classList:{add(){},remove(){},toggle(){},contains(){return false}},style:{},dataset:{},innerHTML:"",textContent:"",disabled:false,onclick:null,addEventListener(){},querySelectorAll(){return[]}});
+  const elements=new Map(),makeElement=()=>{const classes=new Set(),attributes=new Map();return{classList:{add(...names){names.forEach(name=>classes.add(name))},remove(...names){names.forEach(name=>classes.delete(name))},toggle(name,force){const enabled=force??!classes.has(name);enabled?classes.add(name):classes.delete(name);return enabled},contains(name){return classes.has(name)}},style:{},dataset:{},innerHTML:"",textContent:"",disabled:false,onclick:null,addEventListener(){},append(){},remove(){},querySelectorAll(){return[]},setAttribute(name,value){attributes.set(name,String(value))},getAttribute(name){return attributes.get(name)??null}}};
   const documentStub={querySelector(selector){if(!elements.has(selector))elements.set(selector,makeElement());return elements.get(selector)},querySelectorAll(){return[]}};
-  const storage=new Map(),localStorageStub={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
-  class ImageStub{set src(value){this._src=value;queueMicrotask(()=>this.onload?.())}get src(){return this._src}}
+  const localStorageStub={getItem(){throw Error("SecurityError")},setItem(){throw Error("SecurityError")},removeItem(){throw Error("SecurityError")}};
+  class ImageStub{constructor(){this.dataset={};this.style={}}set src(value){this._src=value;queueMicrotask(()=>this.onload?.())}get src(){return this._src}remove(){}}
   const windowStub={CACHE_BUST:Date.now()};
+  const consoleStub={...console,warn(){},debug(){}};
   const scenarioBundle=fs.readFileSync(path.join(root,"game/js/scenario_bundle.js"),"utf8");
   new Function("window",scenarioBundle)(windowStub);
-  new Function("window","document","localStorage","Image","fetch","addEventListener","getComputedStyle","requestAnimationFrame","structuredClone","console","setTimeout","setInterval","clearInterval",directBundle)(windowStub,documentStub,localStorageStub,ImageStub,async()=>{throw Error("file protocol")},()=>{},()=>({backgroundImage:"none"}),callback=>callback(),structuredClone,console,setTimeout,setInterval,clearInterval);
+  const fastTimeout=(callback)=>setTimeout(callback,0);
+  new Function("window","document","localStorage","Image","fetch","addEventListener","getComputedStyle","requestAnimationFrame","console","setTimeout","setInterval","clearInterval",directBundle)(windowStub,documentStub,localStorageStub,ImageStub,async()=>{throw Error("file protocol")},()=>{},()=>({backgroundImage:"none"}),callback=>callback(),consoleStub,fastTimeout,setInterval,clearInterval);
   await new Promise(resolve=>setTimeout(resolve,0));
   if(typeof documentStub.querySelector("#start-btn").onclick!=="function")errors.push("game_bundle.js: GAME START handler was not registered during classic-script boot");
+  if(typeof documentStub.querySelector("#skip-btn").onclick!=="function")errors.push("game_bundle.js: SKIP handler was not registered during classic-script boot");
+  await documentStub.querySelector("#start-btn").onclick();
+  const skipButton=documentStub.querySelector("#skip-btn");skipButton.onclick();
+  if(skipButton.getAttribute("aria-pressed")!=="true"||skipButton.textContent!=="SKIP ON")errors.push("game_bundle.js: SKIP did not activate during file:// fallback play");
+  skipButton.onclick();
 }catch(error){errors.push(`game_bundle.js: classic-script boot failed: ${error.message}`)}
 
 for(const[file,data]of Object.entries(files)){

@@ -11,7 +11,7 @@ const battle=plain("battle.js");
 const ui=plain("ui.js").replace("const $=s=>document.querySelector(s)","const ui$=s=>document.querySelector(s)").replaceAll("$(", "ui$(");
 const scenario=plain("scenario.js");
 const main=plain("main.js");
-const uiFacade="const UI={els,preloadVisualAssets,showScreen,updateStatus,background,prepareBackground,sceneTransition,showCharacter,hideCharacter,hideAll,showEnemy,hideEnemy,choices,renderRpgBattle,closeRpgBattle,toast,chapter,effect,documentModal,ending,error};";
+const uiFacade="const UI={els,preloadVisualAssets,showScreen,setSkipActive,updateStatus,background,prepareBackground,sceneTransition,showCharacter,hideCharacter,hideAll,showEnemy,hideEnemy,choices,renderRpgBattle,closeRpgBattle,toast,chapter,effect,documentModal,ending,error};";
 const saveFacade="const Save={hasSave,save,load,clear};";
 
 fs.writeFileSync(path.join(root,"game/js/game_bundle.js"),[state,save,battle,ui,uiFacade,saveFacade,scenario,main,""].join("\n\n"));

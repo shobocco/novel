@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>残クレバハムートで魔王討伐</title>
-  <script>window.CACHE_BUST=Date.now();document.write('<link rel="stylesheet" href="css/style.css?v='+window.CACHE_BUST+'">')</script>
+  <script>
+    window.CACHE_BUST=Date.now();
+    const gameStyles=document.createElement("link");
+    gameStyles.rel="stylesheet";
+    gameStyles.href=`css/style.css?v=${window.CACHE_BUST}`;
+    document.head.append(gameStyles);
+  </script>
 </head>
 <body>
   <main id="game" aria-live="polite">
@@ -19,12 +25,26 @@
       <section id="battle-panel" aria-label="バトル画面"><div class="battle-top"><div class="battle-unit"><span>主人公</span><strong id="battle-hero-hp"></strong><small id="battle-hero-stats"></small><div class="hp-track"><i id="battle-hero-bar"></i></div><strong id="battle-hero-mp"></strong><div class="mp-track"><i id="battle-hero-mp-bar"></i></div></div><div class="battle-turn" id="battle-turn"></div><div class="battle-unit enemy"><span id="battle-enemy-name"></span><strong id="battle-enemy-hp"></strong><div class="hp-track"><i id="battle-enemy-bar"></i></div><small id="battle-enemy-intent"></small></div></div><div id="battle-log"></div><div id="battle-commands"><button data-battle-action="attack">剣で攻撃</button><button data-battle-action="guard">防御</button><button data-battle-action="attack_magic">攻撃魔法</button><button data-battle-action="heal_magic">回復魔法</button><button data-battle-action="potion">ポーション</button><button data-battle-action="bahamut">バハムート</button></div></section>
       <div id="text-window"><div id="speaker"></div><p id="text"></p><span id="next-mark">▼</span></div>
       <div id="debug-panel"><div id="debug-values"></div><div><button data-debug="money">+100,000 G</button><button data-debug="value">価値 +10</button><button data-debug="condition">状態 +10</button><button data-debug="trust">信頼 +10</button></div></div>
-      <button id="save-btn" title="現在地点を保存">SAVE</button>
+      <div id="play-controls"><button id="skip-btn" title="次の選択肢・戦闘まで会話を早送りします" aria-pressed="false">SKIP</button><button id="save-btn" title="現在地点を保存">SAVE</button></div>
     </section>
     <section id="ending-screen" class="screen"><div class="ending-card"><p>STORY COMPLETE</p><h2 id="ending-title"></h2><div id="ending-text"></div><button id="title-btn">タイトルへ戻る</button></div></section>
-    <div id="modal" class="modal"><div class="modal-card"><button id="modal-close" aria-label="閉じる">×</button><img id="modal-image" alt="書類"><p id="modal-caption"></p></div></div>
+    <div id="modal" class="modal"><div class="modal-card"><button id="modal-close" aria-label="閉じる">×</button><img id="modal-image" alt="書類"><p id="modal-caption"></p><small>画面をクリックして閉じる</small></div></div>
     <div id="error-box"></div>
   </main>
-  <script>document.write('<script src="js/scenario_bundle.js?v='+window.CACHE_BUST+'"><\/script>');document.write('<script src="js/game_bundle.js?v='+window.CACHE_BUST+'"><\/script>')</script>
+  <script>
+    const showLoadError=file=>{
+      const box=document.querySelector("#error-box");
+      box.textContent=`起動エラー: ${file} を読み込めません。`;
+      box.style.display="block";
+    };
+    const loadScript=(file,onload)=>{
+      const script=document.createElement("script");
+      script.src=`js/${file}?v=${window.CACHE_BUST}`;
+      script.onload=onload;
+      script.onerror=()=>showLoadError(file);
+      document.body.append(script);
+    };
+    loadScript("scenario_bundle.js",()=>loadScript("game_bundle.js"));
+  </script>
 </body>
 </html>

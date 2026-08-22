@@ -15,3 +15,20 @@
 #battle-panel{display:none;position:absolute;z-index:12;inset:0;pointer-events:none;font-family:system-ui,"Yu Gothic",sans-serif}.battle-active #battle-panel{display:block}.battle-active #text-window,.battle-active #save-btn,.battle-active #status{visibility:hidden}.battle-top{position:absolute;left:4%;right:4%;top:4%;display:grid;grid-template-columns:minmax(220px,28%) 1fr minmax(220px,28%);gap:18px;align-items:start}.battle-unit{padding:12px 16px;background:#07101eeb;border:1px solid var(--gold);box-shadow:0 8px 22px #000}.battle-unit.enemy{text-align:right}.battle-unit span,.battle-unit strong{display:block}.battle-unit span{color:var(--gold);font-weight:700}.battle-unit strong{margin:4px 0;font-size:.85rem}.hp-track{height:12px;background:#240d12;border:1px solid #ffffff55;overflow:hidden}.hp-track i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#28a745,#7ce36e);transition:width .25s}.battle-unit.enemy .hp-track i{margin-left:auto;background:linear-gradient(90deg,#d34444,#ff7a55)}.battle-turn{text-align:center;color:var(--gold);font-weight:800;letter-spacing:.15em;text-shadow:0 2px 6px #000}.battle-active #enemy-layer{z-index:4}#battle-log{position:absolute;left:50%;bottom:25%;transform:translateX(-50%);width:min(680px,82%);min-height:72px;padding:14px 20px;text-align:center;background:#07101eee;border:1px solid #d8b35baa;white-space:pre-line;box-shadow:0 8px 28px #000}#battle-commands{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:min(760px,88%);display:grid;grid-template-columns:repeat(4,1fr);gap:10px;pointer-events:auto}#battle-commands button{background:linear-gradient(#315b87,#102846);padding:14px 8px}#battle-commands button:disabled{filter:grayscale(1)}@media(max-width:700px){.battle-top{grid-template-columns:1fr 1fr}.battle-turn{display:none}#battle-commands{grid-template-columns:1fr 1fr;bottom:3%}#battle-log{bottom:24%}}
 .mp-track{display:none;height:9px;background:#07152b;border:1px solid #ffffff55;overflow:hidden}.mp-track i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#2674d9,#65c7ff);transition:width .25s}#battle-hero-mp,#battle-enemy-intent{display:none}.tactical-battle .mp-track,.tactical-battle #battle-hero-mp,.tactical-battle #battle-enemy-intent{display:block}.tactical-battle #battle-enemy-intent{margin-top:8px;color:#ffd27a;font-weight:700}.tactical-battle #battle-commands{width:min(940px,94%);grid-template-columns:repeat(5,1fr)}@media(max-width:700px){.tactical-battle #battle-commands{grid-template-columns:repeat(2,1fr)}.tactical-battle #battle-log{bottom:30%}}
 .god-battle [data-character="hero"],.god-battle [data-character="bahamut"],.god-battle [data-character="demon_king"]{visibility:hidden;opacity:0}
+
+/* Playback controls, document dismissal, and compact battle layout. */
+#play-controls{position:absolute;z-index:7;top:3%;left:2%;display:flex;gap:8px}
+#play-controls #save-btn,#play-controls #skip-btn{position:static;padding:.45rem .8rem;font:700 .7rem sans-serif}
+#skip-btn.active{background:linear-gradient(#8a6520,#49330d);box-shadow:0 0 14px #d8b35b88}
+.modal{cursor:pointer}.modal-card img{max-height:78vh}.modal-card small{display:block;margin-top:5px;color:#d8b35bcc}
+.chapter-active #play-controls,.battle-active #play-controls{visibility:hidden;opacity:0}
+@media(max-width:700px){#game{height:100vh;height:100dvh;min-height:0}#play-controls{top:auto;bottom:26%;left:2%}}
+@media(max-width:700px),(max-height:600px){
+  #game{height:100vh;height:100dvh;min-height:0}
+  .battle-top{left:2%;right:2%;top:2%;grid-template-columns:1fr 1fr;gap:8px}
+  .battle-turn{display:none}.battle-unit{padding:7px 9px}.battle-unit strong{font-size:.75rem}.hp-track{height:9px}
+  #battle-commands,.tactical-battle #battle-commands{bottom:max(8px,env(safe-area-inset-bottom));width:96%;grid-template-columns:1fr 1fr;gap:6px}
+  #battle-commands button{min-height:38px;padding:7px 4px;font-size:.8rem}
+  #battle-log,.tactical-battle #battle-log{bottom:calc(max(8px,env(safe-area-inset-bottom)) + 136px);width:92%;min-height:56px;padding:8px 10px;font-size:.82rem}
+  .battle-active #enemy-layer{top:22%;bottom:42%}
+}
