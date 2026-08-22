@@ -20,7 +20,7 @@
         {
           "type": "showCharacter",
           "character": "hero",
-          "expression": "normal",
+          "expression": "angry",
           "position": "left"
         },
         {

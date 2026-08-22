@@ -34,6 +34,12 @@
           "name": "flash"
         },
         {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "surprised",
+          "position": "center"
+        },
+        {
           "type": "dialogue",
           "speaker": "hero",
           "text": "うわっ、なんだこの光！？"

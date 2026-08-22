@@ -23,7 +23,7 @@
         {
           "type": "showCharacter",
           "character": "hero",
-          "expression": "normal",
+          "expression": "serious",
           "position": "left"
         },
         {
@@ -71,6 +71,12 @@
           "type": "dialogue",
           "speaker": "demon_king",
           "text": "……それは詐欺ではないのか？"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "confused",
+          "position": "left"
         },
         {
           "type": "dialogue",

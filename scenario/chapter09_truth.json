@@ -16,6 +16,12 @@
           "position": "center"
         },
         {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "confused",
+          "position": "left"
+        },
+        {
           "type": "dialogue",
           "speaker": "demon_king",
           "text": "神は暇つぶしでこの戦いを始めた。お前は世界を救う勇者ではない。神の遊び道具だ。"
@@ -50,6 +56,12 @@
           "type": "dialogue",
           "speaker": "god",
           "text": "主人公さん♪　魔王のお話なんて聞かなくていいですよ。早く倒してください♪"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "angry",
+          "position": "left"
         },
         {
           "type": "dialogue",

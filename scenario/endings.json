@@ -12,7 +12,7 @@
         {
           "type": "showCharacter",
           "character": "hero",
-          "expression": "normal",
+          "expression": "injured",
           "position": "center"
         },
         {
@@ -23,6 +23,12 @@
           "type": "dialogue",
           "speaker": "hero",
           "text": "……終わった。本当に、今回はひどい目にあった。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "smile",
+          "position": "center"
         },
         {
           "type": "dialogue",
@@ -48,6 +54,12 @@
           "character": "god",
           "expression": "normal",
           "position": "center"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "despair",
+          "position": "left"
         },
         {
           "type": "dialogue",
@@ -82,6 +94,12 @@
           "character": "god",
           "expression": "normal",
           "position": "center"
+        },
+        {
+          "type": "showCharacter",
+          "character": "hero",
+          "expression": "angry",
+          "position": "left"
         },
         {
           "type": "dialogue",
@@ -143,7 +161,7 @@
         {
           "type": "showCharacter",
           "character": "hero",
-          "expression": "normal",
+          "expression": "smile",
           "position": "left"
         },
         {
