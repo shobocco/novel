@@ -52,7 +52,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "evil_smile",
           "position": "center"
         },
         {
@@ -92,7 +92,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "evil_smile",
           "position": "center"
         },
         {

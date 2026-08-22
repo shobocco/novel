@@ -48,7 +48,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "smile",
           "position": "center"
         },
         {
@@ -60,6 +60,12 @@
           "type": "dialogue",
           "speaker": "hero",
           "text": "待ってました。これで自由だ……！"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "evil_smile",
+          "position": "center"
         },
         {
           "type": "dialogue",

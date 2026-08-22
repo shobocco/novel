@@ -12,7 +12,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "smile",
           "position": "left"
         },
         {
@@ -60,6 +60,12 @@
           "type": "dialogue",
           "speaker": "hero",
           "text": "……で、このドラゴンって、神様から無料でもらえるんですよね？"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "evil_smile",
+          "position": "left"
         },
         {
           "type": "dialogue",

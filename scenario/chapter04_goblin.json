@@ -74,7 +74,7 @@
         {
           "type": "showCharacter",
           "character": "guild_receptionist",
-          "expression": "normal",
+          "expression": "smile",
           "position": "center"
         },
         {
@@ -96,7 +96,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "smile",
           "position": "right"
         },
         {

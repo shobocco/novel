@@ -21,7 +21,7 @@
         {
           "type": "showCharacter",
           "character": "guild_receptionist",
-          "expression": "normal",
+          "expression": "surprised",
           "position": "center"
         },
         {
@@ -51,6 +51,12 @@
           "text": "10億ゴールドです。月10万。"
         },
         {
+          "type": "showCharacter",
+          "character": "guild_receptionist",
+          "expression": "worried",
+          "position": "center"
+        },
+        {
           "type": "dialogue",
           "speaker": "guild_receptionist",
           "text": "……それ、本当に大丈夫なんですか？"
@@ -59,6 +65,12 @@
           "type": "dialogue",
           "speaker": "hero",
           "text": "俺もそう思います。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "guild_receptionist",
+          "expression": "smile",
+          "position": "center"
         },
         {
           "type": "dialogue",

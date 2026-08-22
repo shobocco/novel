@@ -43,7 +43,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "normal",
+          "expression": "surprised",
           "position": "center"
         },
         {
@@ -55,6 +55,12 @@
           "type": "dialogue",
           "speaker": "hero",
           "text": "俺はもう、お前のおもちゃじゃない。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "serious",
+          "position": "center"
         },
         {
           "type": "dialogue",
@@ -76,6 +82,12 @@
           "name": "flash"
         },
         {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "angry",
+          "position": "center"
+        },
+        {
           "type": "dialogue",
           "speaker": "god",
           "text": "いいでしょう。最後まで楽しませてください。"
@@ -90,6 +102,12 @@
     },
     "scene_002": {
       "steps": [
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "defeated",
+          "position": "center"
+        },
         {
           "type": "setFlag",
           "flag": "defeatedGod",
