@@ -32,6 +32,12 @@
       "steps": [
         {
           "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "defeated",
+          "position": "center"
+        },
+        {
+          "type": "showCharacter",
           "character": "hero",
           "expression": "injured",
           "position": "left"

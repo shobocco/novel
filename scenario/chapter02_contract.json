@@ -64,7 +64,7 @@
         {
           "type": "showCharacter",
           "character": "god",
-          "expression": "evil_smile",
+          "expression": "smile",
           "position": "left"
         },
         {

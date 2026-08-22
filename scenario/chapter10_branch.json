@@ -11,6 +11,12 @@
         },
         {
           "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "serious",
+          "position": "center"
+        },
+        {
+          "type": "showCharacter",
           "character": "hero",
           "expression": "confused",
           "position": "left"
@@ -85,6 +91,12 @@
           "character": "hero",
           "expression": "smile",
           "position": "left"
+        },
+        {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "smile",
+          "position": "center"
         },
         {
           "type": "dialogue",

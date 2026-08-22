@@ -68,6 +68,12 @@
           "text": "なんだよ、その顔。"
         },
         {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "amazed",
+          "position": "center"
+        },
+        {
           "type": "dialogue",
           "speaker": "demon_king",
           "text": "……それは詐欺ではないのか？"

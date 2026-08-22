@@ -26,7 +26,7 @@
         {
           "type": "showCharacter",
           "character": "demon_king",
-          "expression": "normal",
+          "expression": "smile",
           "position": "center"
         },
         {
@@ -63,6 +63,12 @@
           "position": "center"
         },
         {
+          "type": "showCharacter",
+          "character": "demon_king",
+          "expression": "angry",
+          "position": "center"
+        },
+        {
           "type": "dialogue",
           "speaker": "demon_king",
           "text": "神よ。貴様の遊びはここまでだ。"
@@ -71,6 +77,12 @@
           "type": "dialogue",
           "speaker": "bahamut",
           "text": "我が主を苦しめた代償を払ってもらう。"
+        },
+        {
+          "type": "showCharacter",
+          "character": "god",
+          "expression": "serious",
+          "position": "center"
         },
         {
           "type": "dialogue",
