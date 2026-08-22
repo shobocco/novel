@@ -14,7 +14,7 @@
       { "type": "dialogue", "speaker": "demon_soldier", "text": "待て、人間。その黒竜……まさか神の契約を受けたのか？" },
       { "type": "dialogue", "speaker": "hero", "text": "どうしてそれを知ってる？" },
       { "type": "dialogue", "speaker": "demon_soldier", "text": "……気の毒に。だが、城を守る命令には逆らえない。通すわけにはいかん！" },
-      { "type": "battle", "enemy": "demon_soldier", "winNext": "scene_002", "loseNext": "ending_bad_c_demon_soldier" }
+      { "type": "battle", "enemy": "demon_soldier", "winNext": "scene_002", "loseNext": "ending_bad_d_demon_soldier" }
     ]},
     "scene_002": { "steps": [
       { "type": "dialogue", "speaker": "demon_soldier", "text": "強いな……。魔王様なら、神の契約が何を意味するか教えてくださるだろう。" },
@@ -38,9 +38,9 @@
       { "type": "set", "variable": "endingId", "value": "bad_end_a" },
       { "type": "loadScenario", "file": "endings.json" }
     ]},
-    "ending_bad_c_demon_soldier": { "steps": [
+    "ending_bad_d_demon_soldier": { "steps": [
       { "type": "set", "variable": "defeatedBy", "value": "demon_soldier" },
-      { "type": "set", "variable": "endingId", "value": "bad_end_c" },
+      { "type": "set", "variable": "endingId", "value": "bad_end_d" },
       { "type": "loadScenario", "file": "endings.json" }
     ]}
   }

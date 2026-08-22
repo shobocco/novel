@@ -104,6 +104,6 @@
     "Treat game/data/*.json as the source of character, enemy, and balance data.",
     "Do not modify, regenerate, or overwrite files under assets/.",
     "Prioritize a fully playable prototype over visual polish.",
-    "Verify GOOD END, NORMAL END, BAD END A, BAD END B, and BAD END C before considering the prototype complete."
+    "Verify GOOD END, NORMAL END, BAD END A, BAD END B, BAD END C, and BAD END D before considering the prototype complete."
   ]
 }

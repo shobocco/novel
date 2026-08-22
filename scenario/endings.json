@@ -152,6 +152,20 @@
         }
       ]
     },
+    "ending_bad_d": {
+      "steps": [
+        {
+          "type": "effect",
+          "name": "fade_black"
+        },
+        {
+          "type": "ending",
+          "id": "bad_end_d",
+          "title": "BAD END D",
+          "text": "冒険者は道半ばで力尽きた。"
+        }
+      ]
+    },
     "ending_good": {
       "steps": [
         {
@@ -263,6 +277,18 @@
           "operator": "==",
           "value": "bad_end_c",
           "trueNext": "ending_bad_c",
+          "falseNext": "check_bad_d"
+        }
+      ]
+    },
+    "check_bad_d": {
+      "steps": [
+        {
+          "type": "condition",
+          "variable": "endingId",
+          "operator": "==",
+          "value": "bad_end_d",
+          "trueNext": "ending_bad_d",
           "falseNext": "ending_good"
         }
       ]

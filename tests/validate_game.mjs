@@ -68,8 +68,8 @@ function simulate(policy){
   throw Error("infinite loop");
 }
 
-const plans={normal:{journey:0,route:0,battle:"hero"},bad_a:{journey:1,route:0,battle:"hero"},bad_b:{journey:0,route:0,battle:"bahamut"},bad_c:{journey:0,route:0,battle:"hero",lose:"demon_king"},good:{journey:0,route:1,battle:"hero"}};
-const expected={normal:"normal_end",bad_a:"bad_end_a",bad_b:"bad_end_b",bad_c:"bad_end_c",good:"good_end"};
+const plans={normal:{journey:0,route:0,battle:"hero"},bad_a:{journey:1,route:0,battle:"hero"},bad_b:{journey:0,route:0,battle:"bahamut"},bad_c:{journey:0,route:0,battle:"hero",lose:"demon_king"},bad_d:{journey:0,route:0,battle:"hero",lose:"goblin"},good:{journey:0,route:1,battle:"hero"}};
+const expected={normal:"normal_end",bad_a:"bad_end_a",bad_b:"bad_end_b",bad_c:"bad_end_c",bad_d:"bad_end_d",good:"good_end"};
 for(const[name,plan]of Object.entries(plans)){
   const result=simulate({choice:(file,step)=>step.options[file.includes("chapter06")?plan.journey:plan.route],battle:(_file,step)=>plan.lose===step.enemy?"lose":plan.battle});
   console.log(`${name}: ${result.ending} money=${result.state.money} payments=${result.state.loanPaymentsMade} appraisal=${result.state.finalAppraisal??"-"}`);
@@ -84,9 +84,14 @@ for(const enemy of added){
   const png=path.join(root,enemies[enemy].asset),webp=png.replace(/\.png$/i,".webp");
   if(!fs.existsSync(png)||!fs.existsSync(webp))errors.push(`${enemy}: missing PNG or WebP asset`);
   const loss=simulate({choice:(_file,step)=>step.options[0],battle:(_file,step)=>step.enemy===enemy?"lose":"hero"});
-  if(loss.ending!=="bad_end_c"||loss.state.defeatedBy!==enemy)errors.push(`${enemy}: defeat did not preserve defeatedBy and reach BAD END C`);
+  if(loss.ending!=="bad_end_d"||loss.state.defeatedBy!==enemy)errors.push(`${enemy}: defeat did not preserve defeatedBy and reach BAD END D`);
   const state=initial(),beforeCondition=state.bahamutCondition,beforeCount=state.bahamutBattleCount,battle=createRpgBattle(enemy,enemies,state);performRpgAction(battle,state,enemies,"bahamut");
   if(state.bahamutCondition!==beforeCondition-enemies[enemy].bahamutConditionCost||state.bahamutBattleCount!==beforeCount+1)errors.push(`${enemy}: Bahamut usage did not update condition/count`);
+}
+
+for(const enemy of["goblin","orc",...added]){
+  const loss=simulate({choice:(_file,step)=>step.options[0],battle:(_file,step)=>step.enemy===enemy?"lose":"hero"});
+  if(loss.ending!=="bad_end_d"||loss.state.defeatedBy!==enemy)errors.push(`${enemy}: ordinary-monster defeat did not preserve defeatedBy and reach BAD END D`);
 }
 
 const stats=Object.fromEntries(["goblin","orc","demon_soldier","wyvern","golem","demon_king"].map(enemy=>[enemy,createRpgBattle(enemy,enemies,initial())]));
@@ -110,4 +115,4 @@ const healingWyvern=createRpgBattle("wyvern",enemies,combatState);performRpgActi
 for(const background of["bg_dungeon_entrance","bg_dungeon","bg_demon_realm"]){for(const ext of["png","webp"])if(!fs.existsSync(path.join(root,`assets/backgrounds/${background}.${ext}`)))errors.push(`${background}: missing ${ext}`)}
 
 if(errors.length){console.error(errors.join("\n"));process.exit(1)}
-console.log("All scenario references, five ending routes, added RPG battles, assets, growth, and Bahamut effects passed.");
+console.log("All scenario references, six ending routes, added RPG battles, assets, growth, and Bahamut effects passed.");

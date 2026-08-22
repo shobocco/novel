@@ -15,4 +15,22 @@ const uiFacade="const UI={els,preloadVisualAssets,showScreen,updateStatus,backgr
 const saveFacade="const Save={hasSave,save,load,clear};";
 
 fs.writeFileSync(path.join(root,"game/js/game_bundle.js"),[state,save,battle,ui,uiFacade,saveFacade,scenario,main,""].join("\n\n"));
-console.log("Generated game/js/game_bundle.js");
+
+const scenarioDirectory=path.join(root,"scenario");
+const scenarioBundle=Object.fromEntries(
+  fs.readdirSync(scenarioDirectory)
+    .filter(file=>file.endsWith(".json"))
+    .sort()
+    .map(file=>[path.basename(file,".json"),JSON.parse(fs.readFileSync(path.join(scenarioDirectory,file),"utf8"))])
+);
+const dataBundle=Object.fromEntries(
+  ["characters","enemies","game_balance"].map(name=>[
+    name,
+    JSON.parse(fs.readFileSync(path.join(root,"game/data",`${name}.json`),"utf8"))
+  ])
+);
+fs.writeFileSync(
+  path.join(root,"game/js/scenario_bundle.js"),
+  `window.SCENARIO_BUNDLE=${JSON.stringify(scenarioBundle)};window.DATA_BUNDLE=${JSON.stringify(dataBundle)};\n`
+);
+console.log("Generated game/js/game_bundle.js and game/js/scenario_bundle.js");

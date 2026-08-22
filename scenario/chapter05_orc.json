@@ -44,7 +44,7 @@
           "type": "battle",
           "enemy": "orc",
           "winNext": "scene_002",
-          "loseNext": "ending_bad_c"
+          "loseNext": "ending_bad_d"
         }
       ]
     },
@@ -147,7 +147,7 @@
         }
       ]
     },
-    "ending_bad_c": {
+    "ending_bad_d": {
       "steps": [
         {
           "type": "set",
@@ -157,7 +157,7 @@
         {
           "type": "set",
           "variable": "endingId",
-          "value": "bad_end_c"
+          "value": "bad_end_d"
         },
         {
           "type": "loadScenario",
