@@ -23,6 +23,7 @@
 .modal{cursor:pointer}.modal-card img{max-height:78vh}.modal-card small{display:block;margin-top:5px;color:#d8b35bcc}
 .chapter-active #play-controls,.battle-active #play-controls{visibility:hidden;opacity:0}
 @media(max-width:700px){#game{height:100vh;height:100dvh;min-height:0}#play-controls{top:auto;bottom:26%;left:2%}}
+@media(max-width:700px) and (orientation:portrait){#play-controls{bottom:calc(25% + 3.75rem)}}
 @media(max-width:700px),(max-height:600px){
   #game{height:100vh;height:100dvh;min-height:0}
   .battle-top{left:2%;right:2%;top:2%;grid-template-columns:1fr 1fr;gap:8px}

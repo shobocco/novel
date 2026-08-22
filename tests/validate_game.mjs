@@ -13,6 +13,7 @@ const gameCss=fs.readFileSync(path.join(root,"game/css/style.css"),"utf8");
 if(/document\.write\s*\(/.test(indexHtml))errors.push("game/index.html: document.write remains and can fail during Firefox file:// startup");
 if(!indexHtml.includes('loadScript("scenario_bundle.js",()=>loadScript("game_bundle.js"))'))errors.push("game/index.html: ordered file:// bundle loading is missing");
 if(!gameCss.includes("height:100dvh")||!gameCss.includes("safe-area-inset-bottom"))errors.push("style.css: compact mobile battle viewport/safe-area handling is missing");
+if(!gameCss.includes("@media(max-width:700px) and (orientation:portrait){#play-controls{bottom:calc(25% + 3.75rem)}}"))errors.push("style.css: portrait playback controls can overlap the speaker nameplate");
 if(/import\s+.*?\s+from\s+["']/.test(directBundle))errors.push("game_bundle.js: ES module import remains in the file:// classic bundle");
 if(/\bexport\s+(?:const|function|class|async\s+function)\b/.test(directBundle))errors.push("game_bundle.js: ES module export remains in the file:// classic bundle");
 if(/\bstructuredClone\b/.test(directBundle))errors.push("game_bundle.js: structuredClone remains and can break older Firefox file:// startup");
