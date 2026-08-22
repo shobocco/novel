@@ -339,7 +339,7 @@ bahamutValue
 詳細な補正値は、
 
 ```text
-docs/economy_system.md
+docs/game_design.md
 ```
 
 を参照する。

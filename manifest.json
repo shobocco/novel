@@ -12,9 +12,11 @@
   "documents": [
     "README.md",
     "docs/scenario_spec.md",
-    "docs/economy_system.md",
+    "docs/game_design.md",
     "docs/ending_conditions.md",
-    "docs/asset_list.md"
+    "docs/asset_list.md",
+    "docs/folder_structure.md",
+    "docs/prototype_implementation_log.md"
   ],
   "scenario": {
     "directory": "scenario/",

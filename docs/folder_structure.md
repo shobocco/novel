@@ -9,7 +9,9 @@ bahamut_novel/
 │  ├─ game_design.md
 │  ├─ scenario_spec.md
 │  ├─ ending_conditions.md
-│  └─ asset_list.md
+│  ├─ asset_list.md
+│  ├─ folder_structure.md
+│  └─ prototype_implementation_log.md
 │
 ├─ scenario/
 │  ├─ chapter01_intro.json
@@ -139,11 +141,17 @@ bahamut_novel/
 │  │  ├─ game_state.js
 │  │  ├─ ui.js
 │  │  ├─ battle.js
-│  │  └─ save.js
+│  │  ├─ save.js
+│  │  ├─ game_bundle.js
+│  │  └─ scenario_bundle.js
 │  └─ data/
 │     ├─ characters.json
 │     ├─ enemies.json
 │     └─ game_balance.json
+│
+├─ tests/
+│  ├─ validate_game.mjs
+│  └─ build_game_bundle.mjs
 │
 └─ saves/
 ```
@@ -662,9 +670,11 @@ docs/game_design.md
 docs/scenario_spec.md
 docs/ending_conditions.md
 docs/asset_list.md
+docs/folder_structure.md
+docs/prototype_implementation_log.md
 ```
 
-の5つを読めば、
+の7つを読めば、
 
 **Codexがゲーム全体を理解できる**
 

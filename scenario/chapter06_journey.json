@@ -1,249 +1,89 @@
 {
   "chapter": "chapter06_journey",
-  "title": "第六章 増えていく実績、減っていく所持金",
+  "title": "第六章 強敵と高額報酬",
   "startScene": "scene_001",
   "scenes": {
-    "scene_001": {
-      "steps": [
-        {
-          "type": "background",
-          "name": "bg_road"
-        },
-        {
-          "type": "showCharacter",
-          "character": "hero",
-          "expression": "confused",
-          "position": "left"
-        },
-        {
-          "type": "showCharacter",
-          "character": "bahamut",
-          "expression": "normal",
-          "position": "right"
-        },
-        {
-          "type": "narration",
-          "text": "主人公たちは、魔王領を目指しながらいくつもの討伐依頼をこなした。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "報酬の高い依頼を取れば返済は楽になる。でも、お前を酷使すれば査定に響く。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "ようやく契約の本質を理解したか。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "理解したくなかったよ。"
-        },
-        {
-          "type": "choice",
-          "options": [
-            {
-              "text": "低危険度の依頼を自分主体でこなす",
-              "actions": [
-                {
-                  "type": "add",
-                  "variable": "money",
-                  "value": 180000
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutTrust",
-                  "value": 5
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutValue",
-                  "value": 8
-                }
-              ],
-              "next": "scene_002"
-            },
-            {
-              "text": "高報酬の依頼をバハムート主体で一気にこなす",
-              "actions": [
-                {
-                  "type": "add",
-                  "variable": "money",
-                  "value": 300000
-                },
-                {
-                  "type": "subtract",
-                  "variable": "bahamutCondition",
-                  "value": 20
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutBattleCount",
-                  "value": 3
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutValue",
-                  "value": 4
-                }
-              ],
-              "next": "scene_002"
-            },
-            {
-              "text": "一度休み、バハムートを優先する",
-              "actions": [
-                {
-                  "type": "subtract",
-                  "variable": "money",
-                  "value": 30000
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutCondition",
-                  "value": 10
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutTrust",
-                  "value": 8
-                },
-                {
-                  "type": "add",
-                  "variable": "bahamutValue",
-                  "value": 10
-                }
-              ],
-              "next": "scene_002"
-            }
-          ]
-        }
-      ]
-    },
-    "scene_002": {
-      "steps": [
-        {
-          "type": "statusMessage",
-          "text": "現在の所持金",
-          "variable": "money",
-          "suffix": " G"
-        },
-        {
-          "type": "showCharacter",
-          "character": "god",
-          "expression": "smile",
-          "position": "center"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "god",
-          "text": "では、第3回のお支払いをお願いします♪"
-        },
-        {
-          "type": "loanPayment",
-          "successNext": "scene_003",
-          "failureNext": "ending_bad_a"
-        }
-      ]
-    },
-    "scene_003": {
-      "steps": [
-        {
-          "type": "narration",
-          "text": "さらに旅を続け、主人公は複数の依頼を達成した。"
-        },
-        {
-          "type": "reward",
-          "amount": 180000,
-          "label": "中盤討伐報酬"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "god",
-          "text": "第4回のお支払いです♪"
-        },
-        {
-          "type": "loanPayment",
-          "successNext": "scene_004",
-          "failureNext": "ending_bad_a"
-        }
-      ]
-    },
-    "scene_004": {
-      "steps": [
-        {
-          "type": "background",
-          "name": "bg_road"
-        },
-        {
-          "type": "showCharacter",
-          "character": "hero",
-          "expression": "serious",
-          "position": "left"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "あと少しで魔王領だ。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "お前も随分強くなった。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "借金への耐性が？"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "戦士としてだ。"
-        },
-        {
-          "type": "reward",
-          "amount": 160000,
-          "label": "魔王領進入前の討伐報酬"
-        },
-        {
-          "type": "showCharacter",
-          "character": "god",
-          "expression": "smile",
-          "position": "center"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "god",
-          "text": "第5回のお支払いです♪"
-        },
-        {
-          "type": "loanPayment",
-          "successNext": "scene_005",
-          "failureNext": "ending_bad_a"
-        }
-      ]
-    },
-    "scene_005": {
-      "steps": [
-        {
-          "type": "loadScenario",
-          "file": "chapter07_demon_realm.json"
-        }
-      ]
-    },
-    "ending_bad_a": {
-      "steps": [
-        {
-          "type": "set",
-          "variable": "endingId",
-          "value": "bad_end_a"
-        },
-        {
-          "type": "loadScenario",
-          "file": "endings.json"
-        }
-      ]
-    }
+    "scene_001": { "steps": [
+      { "type": "background", "name": "bg_road" },
+      { "type": "showCharacter", "character": "hero", "expression": "serious", "position": "left" },
+      { "type": "showCharacter", "character": "bahamut", "expression": "normal", "position": "right" },
+      { "type": "narration", "text": "魔王領へ向かう街道。主人公たちは、高額報酬の討伐依頼を受けながら旅を続けていた。" },
+      { "type": "dialogue", "speaker": "hero", "text": "高い報酬には、それだけ危険な相手がついてくる。ローンってのは本当によくできてるな。" },
+      { "type": "dialogue", "speaker": "bahamut", "text": "私を使えば楽に勝てる。だが、酷使すれば査定に響くのだろう？" },
+      { "type": "dialogue", "speaker": "hero", "text": "分かってる。できるところまでは俺が戦う。" },
+      { "type": "showEnemy", "enemy": "wyvern" },
+      { "type": "dialogue", "speaker": "hero", "text": "来たぞ、ワイバーンだ！" },
+      { "type": "battle", "enemy": "wyvern", "winNext": "scene_002", "loseNext": "ending_bad_c_wyvern" }
+    ]},
+    "scene_002": { "steps": [
+      { "type": "hideEnemy" },
+      { "type": "narration", "text": "ワイバーンの討伐に成功し、依頼達成の報酬が支払われた。" },
+      { "type": "reward", "enemy": "wyvern", "label": "ワイバーン討伐報酬" },
+      { "type": "dialogue", "speaker": "hero", "text": "次はゴーレムか。手持ちを残すか、出発前に徹底整備するか……。" },
+      { "type": "choice", "options": [
+        { "text": "最低限の補給で旅を続ける", "actions": [], "next": "scene_002_payment" },
+        { "text": "バハムートの完全整備と装備補充を行う（150,000 G）", "actions": [
+          { "type": "subtract", "variable": "money", "value": 150000 },
+          { "type": "add", "variable": "bahamutCondition", "value": 15 },
+          { "type": "add", "variable": "bahamutTrust", "value": 8 }
+        ], "next": "scene_002_payment" }
+      ]}
+    ]},
+    "scene_002_payment": { "steps": [
+      { "type": "showCharacter", "character": "god", "expression": "smile", "position": "center" },
+      { "type": "dialogue", "speaker": "god", "text": "高額報酬、おめでとうございます♪　では第3回のお支払いです♪" },
+      { "type": "loanPayment", "successNext": "scene_003", "failureNext": "ending_bad_a" }
+    ]},
+    "scene_003": { "steps": [
+      { "type": "hideCharacter", "character": "god" },
+      { "type": "background", "name": "bg_dungeon_entrance" },
+      { "type": "showCharacter", "character": "hero", "expression": "confused", "position": "left" },
+      { "type": "showCharacter", "character": "bahamut", "expression": "normal", "position": "right" },
+      { "type": "narration", "text": "次の依頼は、古いダンジョンに眠るゴーレムの討伐だった。報酬は高いが、相応の危険がある。" },
+      { "type": "dialogue", "speaker": "hero", "text": "入口からもう嫌な魔力を感じる。高額報酬って言葉が怖くなってきた。" },
+      { "type": "jump", "scene": "scene_004" }
+    ]},
+    "scene_004": { "steps": [
+      { "type": "background", "name": "bg_dungeon" },
+      { "type": "narration", "text": "暗い通路の奥で魔力が脈動し、石造りの巨体がゆっくりと起動した。" },
+      { "type": "showEnemy", "enemy": "golem" },
+      { "type": "dialogue", "speaker": "hero", "text": "あれがゴーレムか。報酬20万Gは伊達じゃなさそうだ。" },
+      { "type": "dialogue", "speaker": "bahamut", "text": "危険なら迷わず私を呼べ。壊れてからでは査定どころではない。" },
+      { "type": "battle", "enemy": "golem", "winNext": "scene_005", "loseNext": "ending_bad_c_golem" }
+    ]},
+    "scene_005": { "steps": [
+      { "type": "hideEnemy" },
+      { "type": "narration", "text": "ゴーレムを停止させ、主人公たちは討伐証明となる魔力核を持ち帰った。" },
+      { "type": "reward", "enemy": "golem", "label": "ゴーレム討伐報酬" },
+      { "type": "showCharacter", "character": "god", "expression": "smile", "position": "center" },
+      { "type": "dialogue", "speaker": "god", "text": "では、第4回のお支払いをお願いします♪" },
+      { "type": "loanPayment", "successNext": "scene_006", "failureNext": "ending_bad_a" }
+    ]},
+    "scene_006": { "steps": [
+      { "type": "hideCharacter", "character": "god" },
+      { "type": "background", "name": "bg_road" },
+      { "type": "showCharacter", "character": "hero", "expression": "serious", "position": "left" },
+      { "type": "showCharacter", "character": "bahamut", "expression": "normal", "position": "right" },
+      { "type": "dialogue", "speaker": "hero", "text": "あと少しで魔王領だ。強敵続きだったけど、俺も随分強くなった。" },
+      { "type": "dialogue", "speaker": "bahamut", "text": "ああ。借金への耐性ではなく、戦士としてな。" },
+      { "type": "showCharacter", "character": "god", "expression": "smile", "position": "center" },
+      { "type": "dialogue", "speaker": "god", "text": "旅立ちの前に、第5回のお支払いです♪" },
+      { "type": "loanPayment", "successNext": "scene_007", "failureNext": "ending_bad_a" }
+    ]},
+    "scene_007": { "steps": [{ "type": "loadScenario", "file": "chapter07_demon_realm.json" }] },
+    "ending_bad_a": { "steps": [
+      { "type": "set", "variable": "endingId", "value": "bad_end_a" },
+      { "type": "loadScenario", "file": "endings.json" }
+    ]},
+    "ending_bad_c_wyvern": { "steps": [
+      { "type": "set", "variable": "defeatedBy", "value": "wyvern" },
+      { "type": "set", "variable": "endingId", "value": "bad_end_c" },
+      { "type": "loadScenario", "file": "endings.json" }
+    ]},
+    "ending_bad_c_golem": { "steps": [
+      { "type": "set", "variable": "defeatedBy", "value": "golem" },
+      { "type": "set", "variable": "endingId", "value": "bad_end_c" },
+      { "type": "loadScenario", "file": "endings.json" }
+    ]}
   }
 }

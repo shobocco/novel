@@ -4,7 +4,7 @@
 保存先：
 
 ```text
-docs/economy_system.md
+docs/game_design.md
 ```
 
 # 1. システムの目的

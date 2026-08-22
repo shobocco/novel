@@ -3,90 +3,45 @@
   "title": "第七章 魔王領",
   "startScene": "scene_001",
   "scenes": {
-    "scene_001": {
-      "steps": [
-        {
-          "type": "background",
-          "name": "bg_demon_castle"
-        },
-        {
-          "type": "showCharacter",
-          "character": "hero",
-          "expression": "serious",
-          "position": "left"
-        },
-        {
-          "type": "showCharacter",
-          "character": "bahamut",
-          "expression": "normal",
-          "position": "right"
-        },
-        {
-          "type": "narration",
-          "text": "長い旅の末、主人公たちはついに魔王城へ到達した。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "あれが魔王城……。いよいよだな。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "bahamut",
-          "text": "だが、妙だ。ここまで来ても、魔王軍は我々を執拗には追ってこなかった。"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "hero",
-          "text": "確かに。むしろ途中の兵士、俺を見て気の毒そうな顔してたぞ。"
-        },
-        {
-          "type": "reward",
-          "amount": 140000,
-          "label": "魔王領討伐報酬"
-        },
-        {
-          "type": "showCharacter",
-          "character": "god",
-          "expression": "smile",
-          "position": "center"
-        },
-        {
-          "type": "dialogue",
-          "speaker": "god",
-          "text": "魔王城到達、おめでとうございます♪　では第6回のお支払いです♪"
-        },
-        {
-          "type": "loanPayment",
-          "successNext": "scene_002",
-          "failureNext": "ending_bad_a"
-        }
-      ]
-    },
-    "scene_002": {
-      "steps": [
-        {
-          "type": "background",
-          "name": "bg_throne_room"
-        },
-        {
-          "type": "loadScenario",
-          "file": "chapter08_demon_king.json"
-        }
-      ]
-    },
-    "ending_bad_a": {
-      "steps": [
-        {
-          "type": "set",
-          "variable": "endingId",
-          "value": "bad_end_a"
-        },
-        {
-          "type": "loadScenario",
-          "file": "endings.json"
-        }
-      ]
-    }
+    "scene_001": { "steps": [
+      { "type": "background", "name": "bg_demon_realm" },
+      { "type": "showCharacter", "character": "hero", "expression": "serious", "position": "left" },
+      { "type": "showCharacter", "character": "bahamut", "expression": "normal", "position": "right" },
+      { "type": "narration", "text": "長い旅の末、主人公たちはついに魔王領へ足を踏み入れた。" },
+      { "type": "dialogue", "speaker": "hero", "text": "ここが魔王領……。思ったより静かだな。" },
+      { "type": "dialogue", "speaker": "bahamut", "text": "警戒しろ。前方から兵士が来る。" },
+      { "type": "showEnemy", "enemy": "demon_soldier" },
+      { "type": "dialogue", "speaker": "demon_soldier", "text": "待て、人間。その黒竜……まさか神の契約を受けたのか？" },
+      { "type": "dialogue", "speaker": "hero", "text": "どうしてそれを知ってる？" },
+      { "type": "dialogue", "speaker": "demon_soldier", "text": "……気の毒に。だが、城を守る命令には逆らえない。通すわけにはいかん！" },
+      { "type": "battle", "enemy": "demon_soldier", "winNext": "scene_002", "loseNext": "ending_bad_c_demon_soldier" }
+    ]},
+    "scene_002": { "steps": [
+      { "type": "dialogue", "speaker": "demon_soldier", "text": "強いな……。魔王様なら、神の契約が何を意味するか教えてくださるだろう。" },
+      { "type": "dialogue", "speaker": "hero", "text": "俺たちを止めたいのか、助けたいのか、どっちなんだ？" },
+      { "type": "dialogue", "speaker": "demon_soldier", "text": "命令は果たした。ここから先へ進むかは、お前たちの自由だ。" },
+      { "type": "hideEnemy" },
+      { "type": "narration", "text": "魔王軍兵士は武器を収め、魔王城へ続く道を明けた。単純な悪意だけで戦っていたようには見えなかった。" },
+      { "type": "reward", "enemy": "demon_soldier", "label": "魔王軍兵士討伐報酬" },
+      { "type": "background", "name": "bg_demon_castle" },
+      { "type": "dialogue", "speaker": "hero", "text": "あれが魔王城……。兵士も俺を気の毒そうに見ていた。何かがおかしい。" },
+      { "type": "dialogue", "speaker": "bahamut", "text": "魔王に直接確かめるしかあるまい。" },
+      { "type": "showCharacter", "character": "god", "expression": "smile", "position": "center" },
+      { "type": "dialogue", "speaker": "god", "text": "魔王城到達、おめでとうございます♪　では第6回のお支払いです♪" },
+      { "type": "loanPayment", "successNext": "scene_003", "failureNext": "ending_bad_a" }
+    ]},
+    "scene_003": { "steps": [
+      { "type": "background", "name": "bg_throne_room" },
+      { "type": "loadScenario", "file": "chapter08_demon_king.json" }
+    ]},
+    "ending_bad_a": { "steps": [
+      { "type": "set", "variable": "endingId", "value": "bad_end_a" },
+      { "type": "loadScenario", "file": "endings.json" }
+    ]},
+    "ending_bad_c_demon_soldier": { "steps": [
+      { "type": "set", "variable": "defeatedBy", "value": "demon_soldier" },
+      { "type": "set", "variable": "endingId", "value": "bad_end_c" },
+      { "type": "loadScenario", "file": "endings.json" }
+    ]}
   }
 }
